@@ -158,26 +158,25 @@
     <h3>حجز موعد جديد</h3>
 
     <label>اسم المريض</label>
-    <input type="text" placeholder="أدخل الاسم الكامل">
+<input id="patient_name" type="text" placeholder="ادخل الاسم الكامل">
 
-    <label>رقم الهاتف</label>
-    <input type="tel" placeholder="07XXXXXXXXX">
+<label>رقم الهاتف</label>
+<input id="phone" type="tel" placeholder="07XXXXXXXXX">
 
-    <label>نوع الفحص</label>
+<label>نوع الفحص</label>
+<select id="exam_type">
+    <option value="">اختر نوع الفحص</option>
+    <option value="CT">مفراس - CT</option>
+    <option value="X-Ray">أشعة - X-Ray</option>
+</select>
 
-    <select>
-      <option>اختر نوع الفحص</option>
-      <option>CT - المفراس</option>
-      <option>X-Ray - الأشعة</option>
-    </select>
+<label>تاريخ الموعد</label>
+<input id="appointment_date" type="date">
 
-    <label>تاريخ الموعد</label>
-    <input type="date">
+<label>وقت الموعد</label>
+<input id="appointment_time" type="time">
 
-    <label>وقت الموعد</label>
-    <input type="time">
-
-    <button>تأكيد الحجز</button>
+<button id="booking_button" type="button">تأكيد الحجز</button>
 
   </div>
 
@@ -198,6 +197,41 @@
     SUPABASE_URL,
     SUPABASE_KEY
   );
+  document.getElementById('booking_button').addEventListener('click', async function () {
+
+  const patient_name = document.getElementById('patient_name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const exam_type = document.getElementById('exam_type').value;
+  const appointment_date = document.getElementById('appointment_date').value;
+  const appointment_time = document.getElementById('appointment_time').value;
+
+  if (!patient_name || !phone || !exam_type || !appointment_date || !appointment_time) {
+    alert('يرجى ملء جميع معلومات الحجز');
+    return;
+  }
+
+  const booking_code = 'RAD-' + Date.now().toString().slice(-6);
+
+  const { error } = await supabaseClient
+    .from('appointments')
+    .insert([{
+      patient_name: patient_name,
+      phone: phone,
+      exam_type: exam_type,
+      appointment_date: appointment_date,
+      appointment_time: appointment_time,
+      status: 'pending',
+      booking_code: booking_code
+    }]);
+
+  if (error) {
+    console.error(error);
+    alert('حدث خطأ أثناء الحجز: ' + error.message);
+    return;
+  }
+
+  alert('تم الحجز بنجاح ✅\nرقم الحجز: ' + booking_code);
+});
 </script>
 </body>
 </html>
