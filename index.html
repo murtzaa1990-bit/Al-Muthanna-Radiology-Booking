@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>قسم الأشعة والمفراس | مستشفى المثنى الأهلي</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8fb;
+      color: #17202a;
+    }
+
+    header {
+      background: white;
+      padding: 25px 15px;
+      text-align: center;
+      border-bottom: 4px solid #00a9e0;
+    }
+
+    .logo-box {
+      font-size: 55px;
+      color: #00a9e0;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: #667085;
+      font-size: 16px;
+    }
+
+    .hero {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: #667085;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      max-width: 550px;
+      margin: auto;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+      margin-bottom: 20px;
+      color: #00a9e0;
+    }
+
+    label {
+      display: block;
+      text-align: right;
+      margin: 15px 0 7px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d0d5dd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #00a9e0;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        margin-top: 20px;
+      }
+
+      .hero h2 {
+        font-size: 25px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo-box">✚</div>
+
+  <h1>مستشفى المثنى الأهلي</h1>
+  <p>قسم الأشعة والمفراس</p>
+</header>
+
+<section class="hero">
+
+  <h2>نظام حجز مواعيد الأشعة والمفراس</h2>
+
+  <p>
+    أهلاً بكم في منصة حجز مواعيد قسم الأشعة والمفراس
+    في مستشفى المثنى الأهلي
+  </p>
+
+  <div class="card">
+
+    <h3>حجز موعد جديد</h3>
+
+    <label>اسم المريض</label>
+    <input type="text" placeholder="أدخل الاسم الكامل">
+
+    <label>رقم الهاتف</label>
+    <input type="tel" placeholder="07XXXXXXXXX">
+
+    <label>نوع الفحص</label>
+
+    <select>
+      <option>اختر نوع الفحص</option>
+      <option>CT - المفراس</option>
+      <option>X-Ray - الأشعة</option>
+    </select>
+
+    <label>تاريخ الموعد</label>
+    <input type="date">
+
+    <label>وقت الموعد</label>
+    <input type="time">
+
+    <button>تأكيد الحجز</button>
+
+  </div>
+
+</section>
+
+<footer>
+  <p>قسم الأشعة والمفراس - مستشفى المثنى الأهلي</p>
+  <p>إدارة مسؤول القسم: مرتضى الخفاجي</p>
+  <p>للاتصال: 7174</p>
+</footer>
+
+</body>
+</html>
