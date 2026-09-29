@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +9,12 @@
 
   <style>
     * {
-      .logo-box {
-  margin-bottom: 12px;
-}
-
-.logo-box img {
-  width: 190px;
-  max-width: 70%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-
+      box-sizing: border-box;
     }
 
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: Arial, Tahoma, sans-serif;
       background: #f4f8fb;
       color: #17202a;
     }
@@ -35,19 +27,26 @@
     }
 
     .logo-box {
-      font-size: 55px;
-      color: #00a9e0;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .logo-box img {
+      width: 190px;
+      max-width: 70%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
     }
 
     header h1 {
       font-size: 28px;
-      margin-bottom: 8px;
+      margin: 10px 0 8px;
     }
 
     header p {
       color: #667085;
       font-size: 16px;
+      margin: 0;
     }
 
     .hero {
@@ -62,39 +61,70 @@
       margin-bottom: 15px;
     }
 
-    .hero p {
+    .hero > p {
       color: #667085;
       line-height: 1.8;
       margin-bottom: 30px;
     }
 
     .card {
-      max-width: 550px;
+      max-width: 570px;
       margin: auto;
       background: white;
       border-radius: 20px;
       padding: 30px;
       box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+      text-align: right;
     }
 
     .card h3 {
-      margin-bottom: 20px;
+      margin-top: 0;
+      margin-bottom: 25px;
       color: #00a9e0;
+      text-align: center;
     }
 
     label {
       display: block;
-      text-align: right;
       margin: 15px 0 7px;
       font-weight: bold;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
       padding: 14px;
       border: 1px solid #d0d5dd;
       border-radius: 10px;
       font-size: 16px;
+      background: white;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #00a9e0;
+      box-shadow: 0 0 0 3px rgba(0,169,224,0.10);
+    }
+
+    .upload-box {
+      margin-top: 18px;
+      padding: 18px;
+      border: 2px dashed #9ed9eb;
+      background: #f6fcfe;
+      border-radius: 14px;
+    }
+
+    .upload-box label {
+      margin-top: 0;
+      color: #087f9c;
+    }
+
+    .upload-box small {
+      display: block;
+      margin-top: 8px;
+      color: #667085;
+      line-height: 1.6;
     }
 
     button {
@@ -110,6 +140,47 @@
       cursor: pointer;
     }
 
+    button:hover {
+      background: #078eb9;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 12px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .message.success {
+      display: block;
+      color: #166534;
+      background: #dcfce7;
+      border: 1px solid #86efac;
+    }
+
+    .message.error {
+      display: block;
+      color: #991b1b;
+      background: #fee2e2;
+      border: 1px solid #fecaca;
+    }
+
+    .booking-code {
+      display: block;
+      margin-top: 8px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #087f9c;
+      direction: ltr;
+    }
+
     footer {
       text-align: center;
       padding: 30px 15px;
@@ -117,9 +188,18 @@
       font-size: 14px;
     }
 
+    .admin-link {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: #087f9c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
     @media (max-width: 600px) {
       .hero {
         margin-top: 20px;
+        padding: 15px;
       }
 
       .hero h2 {
@@ -129,6 +209,10 @@
       .card {
         padding: 22px;
       }
+
+      header h1 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
@@ -136,105 +220,552 @@
 <body>
 
 <header>
+
   <div class="logo-box">
-  <img src="hospital-logo.jpg.jpg" alt="شعار مستشفى المثنى الأهلي">
-</div>
+    <img
+      src="hospital-logo.jpg.jpg"
+      alt="شعار مستشفى المثنى الأهلي"
+    >
+  </div>
 
   <h1>مستشفى المثنى الأهلي</h1>
-  <p>قسم الأشعة والمفراس</p>
+
+  <p>
+    قسم الأشعة والمفراس
+  </p>
+
 </header>
+
 
 <section class="hero">
 
-  <h2>نظام حجز مواعيد الأشعة والمفراس</h2>
+  <h2>
+    نظام حجز مواعيد الأشعة والمفراس
+  </h2>
 
   <p>
     أهلاً بكم في منصة حجز مواعيد قسم الأشعة والمفراس
     في مستشفى المثنى الأهلي
   </p>
 
+
   <div class="card">
 
-    <h3>حجز موعد جديد</h3>
+    <h3>
+      حجز موعد جديد
+    </h3>
 
-    <label>اسم المريض</label>
-<input id="patient_name" type="text" placeholder="ادخل الاسم الكامل">
 
-<label>رقم الهاتف</label>
-<input id="phone" type="tel" placeholder="07XXXXXXXXX">
+    <label for="patient_name">
+      اسم المريض
+    </label>
 
-<label>نوع الفحص</label>
-<select id="exam_type">
-    <option value="">اختر نوع الفحص</option>
-    <option value="CT">مفراس - CT</option>
-    <option value="X-Ray">أشعة - X-Ray</option>
-</select>
+    <input
+      id="patient_name"
+      type="text"
+      placeholder="ادخل الاسم الكامل"
+    >
 
-<label>تاريخ الموعد</label>
-<input id="appointment_date" type="date">
 
-<label>وقت الموعد</label>
-<input id="appointment_time" type="time">
+    <label for="phone">
+      رقم الهاتف
+    </label>
 
-<button id="booking_button" type="button">تأكيد الحجز</button>
+    <input
+      id="phone"
+      type="tel"
+      placeholder="07XXXXXXXXX"
+    >
+
+
+    <label for="exam_type">
+      نوع الفحص
+    </label>
+
+    <select id="exam_type">
+
+      <option value="">
+        اختر نوع الفحص
+      </option>
+
+      <option value="CT">
+        مفراس - CT
+      </option>
+
+      <option value="X-Ray">
+        أشعة - X-Ray
+      </option>
+
+    </select>
+
+
+    <label for="appointment_date">
+      تاريخ الموعد
+    </label>
+
+    <input
+      id="appointment_date"
+      type="date"
+    >
+
+
+    <label for="appointment_time">
+      وقت الموعد
+    </label>
+
+    <input
+      id="appointment_time"
+      type="time"
+    >
+
+
+    <!-- إرفاق صورة طلب الفحص -->
+
+    <div class="upload-box">
+
+      <label for="exam_request_image">
+        📎 إرفاق صورة طلب الفحص
+      </label>
+
+      <input
+        id="exam_request_image"
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+      >
+
+      <small>
+        يمكنك إرفاق صورة طلب الطبيب أو الوصفة الطبية.
+        الصيغ المدعومة: JPG و PNG و WEBP.
+      </small>
+
+    </div>
+
+
+    <button
+      id="booking_button"
+      type="button"
+    >
+      تأكيد الحجز
+    </button>
+
+
+    <div
+      id="booking_message"
+      class="message"
+    ></div>
 
   </div>
 
 </section>
 
+
 <footer>
-  <a href="admin.html" style="display:inline-block; margin-bottom:12px; color:#087f9c; text-decoration:none; font-weight:bold;">
-🔐 دخول الإدارة
-</a>
-  <p>قسم الأشعة والمفراس - مستشفى المثنى الأهلي</p>
-  <p>إدارة مسؤول القسم: مرتضى الخفاجي</p>
-  <p>للاتصال: 7174</p>
+
+  <a
+    href="admin.html"
+    class="admin-link"
+  >
+    🔐 دخول الإدارة
+  </a>
+
+  <p>
+    قسم الأشعة والمفراس - مستشفى المثنى الأهلي
+  </p>
+
+  <p>
+    إدارة مسؤول القسم: مرتضى الخفاجي
+  </p>
+
+  <p>
+    للاتصال: 7174
+  </p>
+
 </footer>
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-  const SUPABASE_URL = 'https://kpxonagjclpmwwoczwog.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_Svs8n3EuWTtMngtjw6MEnA_QU-dd0z8';
 
-  const supabaseClient = supabase.createClient(
+<script>
+
+const SUPABASE_URL =
+  'https://kpxonagjclpmwwoczwog.supabase.co';
+
+const SUPABASE_KEY =
+  'sb_publishable_Svs8n3EuWTtMngtjw6MEnA_QU-dd0z8';
+
+
+const supabaseClient =
+  supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
   );
-  document.getElementById('booking_button').addEventListener('click', async function () {
 
-  const patient_name = document.getElementById('patient_name').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const exam_type = document.getElementById('exam_type').value;
-  const appointment_date = document.getElementById('appointment_date').value;
-  const appointment_time = document.getElementById('appointment_time').value;
 
-  if (!patient_name || !phone || !exam_type || !appointment_date || !appointment_time) {
-    alert('يرجى ملء جميع معلومات الحجز');
-    return;
+const bookingButton =
+  document.getElementById('booking_button');
+
+const bookingMessage =
+  document.getElementById('booking_message');
+
+const dateInput =
+  document.getElementById('appointment_date');
+
+
+/* منع اختيار تاريخ سابق */
+
+const today =
+  new Date().toISOString().split('T')[0];
+
+dateInput.min = today;
+
+
+/* عرض رسالة */
+
+function showMessage(text, type) {
+
+  bookingMessage.className =
+    'message ' + type;
+
+  bookingMessage.innerHTML = text;
+}
+
+
+/* زر الحجز */
+
+bookingButton.addEventListener(
+  'click',
+  async function () {
+
+    const patient_name =
+      document
+        .getElementById('patient_name')
+        .value
+        .trim();
+
+    const phone =
+      document
+        .getElementById('phone')
+        .value
+        .trim();
+
+    const exam_type =
+      document
+        .getElementById('exam_type')
+        .value;
+
+    const appointment_date =
+      document
+        .getElementById('appointment_date')
+        .value;
+
+    const appointment_time =
+      document
+        .getElementById('appointment_time')
+        .value;
+
+    const imageInput =
+      document
+        .getElementById('exam_request_image');
+
+    const imageFile =
+      imageInput.files[0];
+
+
+    /* التحقق من المعلومات */
+
+    if (
+      !patient_name ||
+      !phone ||
+      !exam_type ||
+      !appointment_date ||
+      !appointment_time
+    ) {
+
+      showMessage(
+        'يرجى ملء جميع معلومات الحجز',
+        'error'
+      );
+
+      return;
+    }
+
+
+    /* التحقق من الصورة إذا تم اختيارها */
+
+    if (imageFile) {
+
+      const allowedTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/webp'
+      ];
+
+      if (!allowedTypes.includes(imageFile.type)) {
+
+        showMessage(
+          'يرجى اختيار صورة بصيغة JPG أو PNG أو WEBP فقط.',
+          'error'
+        );
+
+        return;
+      }
+
+
+      /* الحد الأقصى 10MB */
+
+      const maxSize =
+        10 * 1024 * 1024;
+
+      if (imageFile.size > maxSize) {
+
+        showMessage(
+          'حجم الصورة كبير. الحد الأقصى المسموح هو 10MB.',
+          'error'
+        );
+
+        return;
+      }
+
+    }
+
+
+    bookingButton.disabled = true;
+
+    bookingButton.textContent =
+      'جاري تثبيت الحجز...';
+
+
+    /* إنشاء رقم الحجز */
+
+    const booking_code =
+      'RAD-' +
+      Date.now()
+        .toString()
+        .slice(-6);
+
+
+    let request_image_path = null;
+
+
+    try {
+
+
+      /* رفع صورة طلب الفحص */
+
+      if (imageFile) {
+
+        bookingButton.textContent =
+          'جاري رفع صورة الفحص...';
+
+
+        const extension =
+          imageFile.name
+            .split('.')
+            .pop()
+            .toLowerCase();
+
+
+        const safeFileName =
+          'request.' + extension;
+
+
+        request_image_path =
+          'patient-requests/' +
+          booking_code +
+          '/' +
+          Date.now() +
+          '_' +
+          safeFileName;
+
+
+        const {
+          error: uploadError
+        } =
+          await supabaseClient
+            .storage
+            .from('radiology-files')
+            .upload(
+              request_image_path,
+              imageFile,
+              {
+                cacheControl: '3600',
+                upsert: false
+              }
+            );
+
+
+        if (uploadError) {
+
+          console.error(
+            'Upload error:',
+            uploadError
+          );
+
+
+          showMessage(
+            'تعذر رفع صورة طلب الفحص: ' +
+            uploadError.message,
+            'error'
+          );
+
+
+          bookingButton.disabled = false;
+
+          bookingButton.textContent =
+            'تأكيد الحجز';
+
+          return;
+        }
+
+      }
+
+
+      bookingButton.textContent =
+        'جاري حفظ الحجز...';
+
+
+      /* حفظ بيانات المريض والحجز */
+
+      const {
+        error: bookingError
+      } =
+        await supabaseClient
+          .from('appointments')
+          .insert([
+            {
+
+              patient_name:
+                patient_name,
+
+              phone:
+                phone,
+
+              exam_type:
+                exam_type,
+
+              appointment_date:
+                appointment_date,
+
+              appointment_time:
+                appointment_time,
+
+              status:
+                'pending',
+
+              booking_code:
+                booking_code,
+
+              request_image_path:
+                request_image_path
+
+            }
+          ]);
+
+
+      if (bookingError) {
+
+        console.error(
+          'Booking error:',
+          bookingError
+        );
+
+
+        /*
+        إذا تم رفع الصورة لكن فشل إنشاء الحجز
+        نحاول حذف الصورة حتى لا تبقى بدون حجز.
+        */
+
+        if (request_image_path) {
+
+          await supabaseClient
+            .storage
+            .from('radiology-files')
+            .remove([
+              request_image_path
+            ]);
+
+        }
+
+
+        showMessage(
+          'حدث خطأ أثناء الحجز: ' +
+          bookingError.message,
+          'error'
+        );
+
+
+        bookingButton.disabled = false;
+
+        bookingButton.textContent =
+          'تأكيد الحجز';
+
+        return;
+      }
+
+
+      /* نجاح الحجز */
+
+      showMessage(
+        'تم الحجز بنجاح ✅' +
+        '<br>' +
+        'رقم الحجز الخاص بك:' +
+        '<span class="booking-code">' +
+        booking_code +
+        '</span>' +
+        'يرجى الاحتفاظ برقم الحجز.',
+        'success'
+      );
+
+
+      /* تفريغ الحقول */
+
+      document
+        .getElementById('patient_name')
+        .value = '';
+
+      document
+        .getElementById('phone')
+        .value = '';
+
+      document
+        .getElementById('exam_type')
+        .value = '';
+
+      document
+        .getElementById('appointment_date')
+        .value = '';
+
+      document
+        .getElementById('appointment_time')
+        .value = '';
+
+      imageInput.value = '';
+
+
+    }
+
+    catch (error) {
+
+      console.error(error);
+
+      showMessage(
+        'حدث خطأ غير متوقع أثناء الحجز.',
+        'error'
+      );
+
+    }
+
+
+    bookingButton.disabled = false;
+
+    bookingButton.textContent =
+      'تأكيد الحجز';
+
   }
+);
 
-  const booking_code = 'RAD-' + Date.now().toString().slice(-6);
-
-  const { error } = await supabaseClient
-    .from('appointments')
-    .insert([{
-      patient_name: patient_name,
-      phone: phone,
-      exam_type: exam_type,
-      appointment_date: appointment_date,
-      appointment_time: appointment_time,
-      status: 'pending',
-      booking_code: booking_code
-    }]);
-
-  if (error) {
-    console.error(error);
-    alert('حدث خطأ أثناء الحجز: ' + error.message);
-    return;
-  }
-
-  alert('تم الحجز بنجاح ✅\nرقم الحجز: ' + booking_code);
-});
 </script>
+
 </body>
 </html>
