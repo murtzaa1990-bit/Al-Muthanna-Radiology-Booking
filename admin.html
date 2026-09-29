@@ -329,10 +329,12 @@ if (!data || data.length === 0) {
     document.getElementById("pendingCount").textContent = 0;
     document.getElementById("completedCount").textContent = 0;
     document.getElementById("cancelledCount").textContent = 0;
+    document.getElementById("totalCount").textContent = 0;
 
     loading.innerText = "لا توجد حجوزات حالياً";
     return;
 }
+document.getElementById("totalCount").textContent = data.length;
 
 const pendingCount = data.filter(item =>
     !item.status || item.status === "pending"
