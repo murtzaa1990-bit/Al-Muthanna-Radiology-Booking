@@ -166,6 +166,15 @@
   onchange="filterByDate()"
   style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; font-size:16px;"
 >
+      <select
+  id="examFilter"
+  onchange="filterByExam()"
+  style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; font-size:16px;"
+>
+  <option value="">جميع الفحوصات</option>
+  <option value="CT">CT - المفراس</option>
+  <option value="X-Ray">X-Ray - الأشعة</option>
+</select>
       <table>
         <thead>
           <tr>
@@ -481,6 +490,21 @@ function filterByDate() {
         const text = rows[i].textContent;
 
         if (selectedDate === "" || text.includes(selectedDate)) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+
+function filterByExam() {
+    const selectedExam = document.getElementById("examFilter").value;
+    const table = document.getElementById("appointments");
+    const rows = table.getElementsByTagName("tr");
+
+    for (let i = 0; i < rows.length; i++) {
+        const text = rows[i].textContent;
+
+        if (selectedExam === "" || text.includes(selectedExam)) {
             rows[i].style.display = "";
         } else {
             rows[i].style.display = "none";
