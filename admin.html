@@ -163,7 +163,12 @@
     <strong>🔴 ملغي</strong>
     <div id="cancelledCount" style="font-size:24px; margin-top:8px;">0</div>
   </div>
-
+<div style="display:flex; gap:8px; flex-wrap:wrap; margin:15px 0;">
+    <button onclick="filterByStatus('all')">📋 الكل</button>
+    <button onclick="filterByStatus('pending')">🟡 قيد الانتظار</button>
+    <button onclick="filterByStatus('completed')">🟢 تم الفحص</button>
+    <button onclick="filterByStatus('cancelled')">🔴 ملغي</button>
+</div>
 </div>
       <p>الحجوزات المسجلة في النظام</p>
     </div>
@@ -345,10 +350,12 @@ document.getElementById("pendingCount").textContent = pendingCount;
 document.getElementById("completedCount").textContent = completedCount;
 document.getElementById("cancelledCount").textContent = cancelledCount;
 
-  data.forEach(item => {
+ data.forEach(item => {
 
     const row =
-      document.createElement("tr");
+        document.createElement("tr");
+
+    row.dataset.status = item.status || "pending";
 
     const values = [
       item.name || item.patient_name || "-",
@@ -539,6 +546,20 @@ function filterByExam() {
         const text = rows[i].textContent;
 
         if (selectedExam === "" || text.includes(selectedExam)) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+}
+  function filterByStatus(status) {
+    const table = document.getElementById("appointments");
+    const rows = table.getElementsByTagName("tr");
+
+    for (let i = 0; i < rows.length; i++) {
+        const rowStatus = rows[i].dataset.status;
+
+        if (status === "all" || rowStatus === status) {
             rows[i].style.display = "";
         } else {
             rows[i].style.display = "none";
