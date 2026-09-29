@@ -160,6 +160,12 @@
   oninput="searchAppointments()"
   style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; font-size:16px;"
 >
+      <input
+  type="date"
+  id="dateFilter"
+  onchange="filterByDate()"
+  style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; font-size:16px;"
+>
       <table>
         <thead>
           <tr>
@@ -466,7 +472,21 @@ checkSession();
         }
     }
 }
+function filterByDate() {
+    const selectedDate = document.getElementById("dateFilter").value;
+    const table = document.getElementById("appointments");
+    const rows = table.getElementsByTagName("tr");
 
+    for (let i = 0; i < rows.length; i++) {
+        const text = rows[i].textContent;
+
+        if (selectedDate === "" || text.includes(selectedDate)) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+}
 </script>
 
 </body>
