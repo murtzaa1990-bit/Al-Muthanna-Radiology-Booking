@@ -702,37 +702,37 @@ tbody tr:hover{
 
     <div id="patientDetails"></div>
 
-    <div class="coming-feature">
+  <div class="coming-feature">
 
-      <h3>ملفات الفحص</h3>
+  <h3>📁 ملفات الفحص</h3>
 
-      <div class="feature-grid">
+  <p style="color:#64748b">
+    ارفع صور الأشعة أو تقرير PDF الخاص بالمريض
+  </p>
 
-        <div class="feature-item">
-          🖼️
-          <br><strong>صور الأشعة</strong>
-          <br><small>رفع وعرض صور الفحص</small>
-        </div>
+  <input
+    type="file"
+    id="radiologyFile"
+    accept="image/*,.pdf,.zip,.dcm"
+    style="margin:15px 0"
+  >
 
-        <div class="feature-item">
-          📄
-          <br><strong>تقرير PDF</strong>
-          <br><small>رفع تقرير الأشعة</small>
-        </div>
+  <button
+    class="primary-btn"
+    type="button"
+    onclick="uploadRadiologyFile()"
+  >
+    📤 رفع ملف الفحص
+  </button>
 
-        <div class="feature-item">
-          📝
-          <br><strong>التقرير الطبي</strong>
-          <br><small>كتابة وحفظ التقرير</small>
-        </div>
+  <div
+    id="uploadMessage"
+    style="margin-top:15px;font-weight:bold"
+  ></div>
 
-      </div>
+  <div id="patientFiles" style="margin-top:20px"></div>
 
-      <p style="color:#64748b;margin-bottom:0">
-        سيتم تفعيل رفع الملفات بعد إعداد التخزين الآمن في Supabase.
-      </p>
-
-    </div>
+</div>
 
   </div>
 
@@ -1425,8 +1425,11 @@ async function deleteAppointment(item){
 /* ===============================
    PATIENT FILE
 ================================ */
+let currentPatient = null;
 
 function openPatientPanel(item){
+
+  currentPatient = item;
 
   const patientName =
     item.name ||
@@ -1491,7 +1494,46 @@ function openPatientPanel(item){
     "block";
 }
 
+async function uploadRadiologyFile(){
 
+  const input = document.getElementById("radiologyFile");
+  const message = document.getElementById("uploadMessage");
+
+  if(!currentPatient){
+    message.textContent = "لم يتم تحديد المريض.";
+    return;
+  }
+
+  if(!input.files || input.files.length === 0){
+    message.textContent = "يرجى اختيار ملف أولاً.";
+    return;
+  }
+
+  const file = input.files[0];
+
+  message.textContent = "جاري رفع الملف... ⏳";
+
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+
+  const filePath =
+    `${currentPatient.id}/${Date.now()}_${safeName}`;
+
+  const { error } = await client.storage
+    .from("radiology-files")
+    .upload(filePath, file, {
+      upsert: false
+    });
+
+  if(error){
+    console.error(error);
+    message.textContent =
+      "فشل رفع الملف: " + error.message;
+    return;
+  }
+
+  message.textContent = "تم رفع ملف الفحص بنجاح ✅";
+  input.value = "";
+}
 function closePatientPanel(){
 
   document.getElementById(
