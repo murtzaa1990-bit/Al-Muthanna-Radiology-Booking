@@ -161,6 +161,7 @@
             <th>نوع الفحص</th>
             <th>التاريخ</th>
             <th>الوقت</th>
+            <th>حالة الحجز</th>
           </tr>
         </thead>
 
@@ -298,7 +299,10 @@ async function loadAppointments() {
       item.phone || "-",
       item.exam || item.exam_type || "-",
       item.date || item.appointment_date || "-",
-      item.time || item.appointment_time || "-"
+      item.time || item.appointment_time || "-",
+      item.status === "completed" ? "🟢 تم الفحص" :
+item.status === "cancelled" ? "🔴 ملغي" :
+"🟡 قيد الانتظار"
     ];
 
     values.forEach(value => {
