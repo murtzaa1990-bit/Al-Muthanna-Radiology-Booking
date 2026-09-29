@@ -147,7 +147,24 @@
       <button class="logout" onclick="logout()">تسجيل الخروج</button>
 
       <h2>حجوزات قسم الأشعة والمفراس</h2>
+<div style="display:flex; gap:10px; flex-wrap:wrap; margin:15px 0;">
 
+  <div style="flex:1; min-width:150px; background:#fff3cd; padding:15px; border-radius:10px; text-align:center;">
+    <strong>🟡 قيد الانتظار</strong>
+    <div id="pendingCount" style="font-size:24px; margin-top:8px;">0</div>
+  </div>
+
+  <div style="flex:1; min-width:150px; background:#d4edda; padding:15px; border-radius:10px; text-align:center;">
+    <strong>🟢 تم الفحص</strong>
+    <div id="completedCount" style="font-size:24px; margin-top:8px;">0</div>
+  </div>
+
+  <div style="flex:1; min-width:150px; background:#f8d7da; padding:15px; border-radius:10px; text-align:center;">
+    <strong>🔴 ملغي</strong>
+    <div id="cancelledCount" style="font-size:24px; margin-top:8px;">0</div>
+  </div>
+
+</div>
       <p>الحجوزات المسجلة في النظام</p>
     </div>
 
@@ -303,13 +320,30 @@ async function loadAppointments() {
 
   loading.innerText = "";
 
-  if (!data || data.length === 0) {
+if (!data || data.length === 0) {
+    document.getElementById("pendingCount").textContent = 0;
+    document.getElementById("completedCount").textContent = 0;
+    document.getElementById("cancelledCount").textContent = 0;
 
-    loading.innerText =
-      "لا توجد حجوزات حالياً.";
-
+    loading.innerText = "لا توجد حجوزات حالياً";
     return;
-  }
+}
+
+const pendingCount = data.filter(item =>
+    !item.status || item.status === "pending"
+).length;
+
+const completedCount = data.filter(item =>
+    item.status === "completed"
+).length;
+
+const cancelledCount = data.filter(item =>
+    item.status === "cancelled"
+).length;
+
+document.getElementById("pendingCount").textContent = pendingCount;
+document.getElementById("completedCount").textContent = completedCount;
+document.getElementById("cancelledCount").textContent = cancelledCount;
 
   data.forEach(item => {
 
