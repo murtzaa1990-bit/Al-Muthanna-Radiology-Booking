@@ -1,234 +1,755 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>إدارة الحجوزات - مستشفى المثنى الأهلي</title>
+<title>Radiology Management System | مستشفى المثنى الأهلي</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+:root{
+  --primary:#087f9c;
+  --primary-dark:#05647b;
+  --secondary:#0ea5a8;
+  --bg:#f4f8fb;
+  --card:#ffffff;
+  --text:#17202a;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --success:#16a34a;
+  --warning:#f59e0b;
+  --danger:#dc2626;
+  --blue:#2563eb;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f8fb;
-      color: #17202a;
-    }
+*{box-sizing:border-box}
 
-    header {
-      background: #087f9c;
-      color: white;
-      padding: 22px;
-      text-align: center;
-    }
+body{
+  margin:0;
+  font-family:Arial,Tahoma,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
 
-    header h1 {
-      margin: 0 0 8px;
-    }
+/* LOGIN */
 
-    .container {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 20px;
-    }
+.login-page{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:linear-gradient(135deg,#087f9c,#064e68);
+}
 
-    .card {
-      background: white;
-      padding: 22px;
-      border-radius: 14px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-      margin-bottom: 20px;
-    }
+.login-card{
+  width:100%;
+  max-width:430px;
+  background:white;
+  border-radius:24px;
+  padding:35px;
+  box-shadow:0 25px 70px rgba(0,0,0,.2);
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 7px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+.login-logo{
+  width:75px;
+  height:75px;
+  border-radius:22px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#e6f6f9;
+  font-size:38px;
+}
 
-    button {
-      background: #087f9c;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 8px;
-    }
+.login-card h1{
+  text-align:center;
+  margin:18px 0 5px;
+  color:var(--primary);
+}
 
-    button:hover {
-      opacity: 0.9;
-    }
+.login-card p{
+  text-align:center;
+  color:var(--muted);
+}
 
-    .logout {
-      background: #c0392b;
-      float: left;
-    }
+.field{
+  margin-top:16px;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
+.field label{
+  display:block;
+  margin-bottom:7px;
+  font-weight:bold;
+}
 
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
-      text-align: center;
-    }
+input,select{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:white;
+  font-size:15px;
+  outline:none;
+}
 
-    th {
-      background: #087f9c;
-      color: white;
-    }
+input:focus,select:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(8,127,156,.1);
+}
 
-    #dashboard {
-      display: none;
-    }
+button{
+  border:0;
+  border-radius:10px;
+  padding:11px 16px;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:bold;
+}
 
-    #message {
-      margin-top: 12px;
-      font-weight: bold;
-    }
+.primary-btn{
+  width:100%;
+  margin-top:20px;
+  background:var(--primary);
+  color:white;
+  padding:14px;
+}
 
-    @media (max-width: 700px) {
-      table {
-        font-size: 12px;
-      }
+.primary-btn:hover{
+  background:var(--primary-dark);
+}
 
-      th, td {
-        padding: 7px;
-      }
-    }
-  </style>
+#message{
+  text-align:center;
+  margin-top:14px;
+  color:var(--danger);
+}
+
+/* DASHBOARD */
+
+#dashboard{
+  display:none;
+}
+
+.topbar{
+  background:white;
+  border-bottom:1px solid var(--border);
+  padding:15px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-icon{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:#e6f6f9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+}
+
+.brand h2{
+  margin:0;
+  font-size:19px;
+}
+
+.brand span{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.logout{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.container{
+  max-width:1450px;
+  margin:auto;
+  padding:25px;
+}
+
+.hero{
+  background:linear-gradient(135deg,#087f9c,#07566c);
+  color:white;
+  padding:27px;
+  border-radius:22px;
+  margin-bottom:22px;
+}
+
+.hero h1{
+  margin:0 0 8px;
+}
+
+.hero p{
+  margin:0;
+  opacity:.9;
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:22px;
+}
+
+.stat{
+  background:white;
+  border-radius:17px;
+  padding:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.05);
+}
+
+.stat-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.stat-icon{
+  width:45px;
+  height:45px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+}
+
+.stat-number{
+  font-size:30px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.stat-title{
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.yellow{background:#fff7db}
+.green{background:#dcfce7}
+.red{background:#fee2e2}
+.blue{background:#dbeafe}
+
+/* CARDS */
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.05);
+}
+
+.card-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.card-title h3{
+  margin:0;
+}
+
+.filters{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:12px;
+}
+
+.status-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:14px;
+}
+
+.status-buttons button{
+  background:#eef6f8;
+  color:#07566c;
+}
+
+.status-buttons button:hover{
+  background:#d8eef3;
+}
+
+/* TABLE */
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:950px;
+}
+
+th{
+  background:#f8fafc;
+  color:#475569;
+  padding:14px 10px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+}
+
+td{
+  padding:13px 10px;
+  text-align:center;
+  border-bottom:1px solid #f0f0f0;
+}
+
+tbody tr:hover{
+  background:#fafcfd;
+}
+
+.badge{
+  padding:7px 10px;
+  border-radius:20px;
+  display:inline-block;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.pending{
+  background:#fff7db;
+  color:#9a6700;
+}
+
+.completed{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.cancelled{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.actions{
+  display:flex;
+  justify-content:center;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.edit-btn{
+  background:#e0f2fe;
+  color:#0369a1;
+}
+
+.status-btn{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.delete-btn{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.file-btn{
+  background:#ede9fe;
+  color:#6d28d9;
+}
+
+.empty{
+  text-align:center;
+  padding:35px;
+  color:var(--muted);
+}
+
+/* PATIENT PANEL */
+
+.patient-panel{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.5);
+  z-index:50;
+  padding:20px;
+  overflow:auto;
+}
+
+.patient-box{
+  max-width:750px;
+  margin:40px auto;
+  background:white;
+  border-radius:22px;
+  padding:25px;
+}
+
+.panel-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.close-btn{
+  background:#f1f5f9;
+  color:#334155;
+}
+
+.patient-info{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin:20px 0;
+}
+
+.info-item{
+  background:#f8fafc;
+  padding:13px;
+  border-radius:10px;
+}
+
+.coming-feature{
+  border:2px dashed #dbe4ea;
+  border-radius:15px;
+  padding:20px;
+  text-align:center;
+  margin-top:15px;
+}
+
+.coming-feature h3{
+  margin-top:0;
+}
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.feature-item{
+  padding:15px;
+  background:#f8fafc;
+  border-radius:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .filters{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:600px){
+  .container{
+    padding:12px;
+  }
+
+  .topbar{
+    padding:12px;
+  }
+
+  .brand span{
+    display:none;
+  }
+
+  .hero{
+    padding:20px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .stat{
+    padding:15px;
+  }
+
+  .stat-number{
+    font-size:24px;
+  }
+
+  .patient-info,
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <h1>مستشفى المثنى الأهلي</h1>
-  <div>قسم الأشعة والمفراس</div>
-</header>
+<!-- LOGIN -->
 
-<div class="container">
+<div id="loginPage" class="login-page">
 
-  <div id="loginBox" class="card">
-    <h2>تسجيل دخول الإدارة</h2>
+  <div class="login-card">
 
-    <input
-      type="email"
-      id="email"
-      placeholder="البريد الإلكتروني"
-    >
+    <div class="login-logo">🩻</div>
 
-    <input
-      type="password"
-      id="password"
-      placeholder="كلمة المرور"
-    >
+    <h1>Radiology System</h1>
 
-    <button onclick="login()">تسجيل الدخول</button>
+    <p>مستشفى المثنى الأهلي<br>قسم الأشعة والمفراس</p>
+
+    <div class="field">
+      <label>البريد الإلكتروني</label>
+      <input type="email" id="email" placeholder="admin@example.com">
+    </div>
+
+    <div class="field">
+      <label>كلمة المرور</label>
+      <input type="password" id="password" placeholder="••••••••">
+    </div>
+
+    <button class="primary-btn" onclick="login()">
+      تسجيل دخول الإدارة
+    </button>
 
     <div id="message"></div>
+
   </div>
 
-  <div id="dashboard">
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard">
+
+  <div class="topbar">
+
+    <div class="brand">
+      <div class="brand-icon">🩻</div>
+
+      <div>
+        <h2>مستشفى المثنى الأهلي</h2>
+        <span>Radiology & CT Management System</span>
+      </div>
+    </div>
+
+    <button class="logout" onclick="logout()">
+      تسجيل الخروج
+    </button>
+
+  </div>
+
+
+  <div class="container">
+
+    <div class="hero">
+      <h1>لوحة إدارة قسم الأشعة والمفراس</h1>
+      <p>إدارة الحجوزات والمرضى والفحوصات من مكان واحد</p>
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-top">
+          <strong>كل الحجوزات</strong>
+          <div class="stat-icon blue">📋</div>
+        </div>
+        <div class="stat-number" id="totalCount">0</div>
+        <div class="stat-title">إجمالي الحجوزات</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top">
+          <strong>قيد الانتظار</strong>
+          <div class="stat-icon yellow">⏳</div>
+        </div>
+        <div class="stat-number" id="pendingCount">0</div>
+        <div class="stat-title">بانتظار إجراء الفحص</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top">
+          <strong>تم الفحص</strong>
+          <div class="stat-icon green">✓</div>
+        </div>
+        <div class="stat-number" id="completedCount">0</div>
+        <div class="stat-title">الفحوصات المكتملة</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-top">
+          <strong>ملغي</strong>
+          <div class="stat-icon red">✕</div>
+        </div>
+        <div class="stat-number" id="cancelledCount">0</div>
+        <div class="stat-title">الحجوزات الملغاة</div>
+      </div>
+
+    </div>
+
+
+    <!-- FILTERS -->
 
     <div class="card">
-      <button class="logout" onclick="logout()">تسجيل الخروج</button>
 
-      <h2>حجوزات قسم الأشعة والمفراس</h2>
-<div style="display:flex; gap:10px; flex-wrap:wrap; margin:15px 0;">
+      <div class="card-title">
+        <h3>🔎 البحث والفلترة</h3>
+      </div>
 
-  <div style="flex:1; min-width:150px; background:#fff3cd; padding:15px; border-radius:10px; text-align:center;">
-    <strong>🟡 قيد الانتظار</strong>
-    <div id="pendingCount" style="font-size:24px; margin-top:8px;">0</div>
-  </div>
-
-  <div style="flex:1; min-width:150px; background:#d4edda; padding:15px; border-radius:10px; text-align:center;">
-    <strong>🟢 تم الفحص</strong>
-    <div id="completedCount" style="font-size:24px; margin-top:8px;">0</div>
-  </div>
-
-  <div style="flex:1; min-width:150px; background:#f8d7da; padding:15px; border-radius:10px; text-align:center;">
-    <strong>🔴 ملغي</strong>
-    <div id="cancelledCount" style="font-size:24px; margin-top:8px;">0</div>
-  </div>
-<div style="display:flex; gap:8px; flex-wrap:wrap; margin:15px 0;">
-    <button onclick="filterByStatus('all')">📋 الكل</button>
-    <button onclick="filterByStatus('pending')">🟡 قيد الانتظار</button>
-    <button onclick="filterByStatus('completed')">🟢 تم الفحص</button>
-    <button onclick="filterByStatus('cancelled')">🔴 ملغي</button>
-</div>
-</div>
-      <p>الحجوزات المسجلة في النظام</p>
-    </div>
-
-    <div class="card" style="overflow-x:auto;">
+      <div class="filters">
 
         <input
-  type="text"
-  id="searchInput"
-  placeholder="🔍 ابحث باسم المريض أو رقم الهاتف"
-  oninput="searchAppointments()"
-  style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; font-size:16px;"
->
-      <input
-  type="date"
-  id="dateFilter"
-  onchange="filterByDate()"
-  style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; font-size:16px;"
->
-      <select
-  id="examFilter"
-  onchange="filterByExam()"
-  style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; font-size:16px;"
->
-  <option value="">جميع الفحوصات</option>
-  <option value="CT">CT - المفراس</option>
-  <option value="X-Ray">X-Ray - الأشعة</option>
-</select>
-      <table>
-        <thead>
-          <tr>
-            <th>الاسم</th>
-            <th>رقم الهاتف</th>
-            <th>نوع الفحص</th>
-            <th>التاريخ</th>
-            <th>الوقت</th>
-            <th>حالة الحجز</th>
-          </tr>
-        </thead>
+          id="searchInput"
+          type="text"
+          placeholder="ابحث باسم المريض أو رقم الهاتف..."
+          oninput="applyFilters()"
+        >
 
-        <tbody id="appointments">
-        </tbody>
+        <input
+          id="dateFilter"
+          type="date"
+          onchange="applyFilters()"
+        >
 
-      </table>
+        <select id="examFilter" onchange="applyFilters()">
+          <option value="">جميع الفحوصات</option>
+          <option value="CT">CT - المفراس</option>
+          <option value="X-Ray">X-Ray - الأشعة</option>
+        </select>
 
-      <p id="loading">جاري تحميل الحجوزات...</p>
+      </div>
+
+      <div class="status-buttons">
+        <button onclick="setStatusFilter('all')">📋 الكل</button>
+        <button onclick="setStatusFilter('pending')">🟡 قيد الانتظار</button>
+        <button onclick="setStatusFilter('completed')">🟢 تم الفحص</button>
+        <button onclick="setStatusFilter('cancelled')">🔴 ملغي</button>
+        <button onclick="showToday()">📅 حجوزات اليوم</button>
+        <button onclick="resetFilters()">↻ مسح الفلاتر</button>
+      </div>
+
+    </div>
+
+
+    <!-- APPOINTMENTS -->
+
+    <div class="card">
+
+      <div class="card-title">
+        <h3>📅 الحجوزات والمرضى</h3>
+        <span id="visibleCount"></span>
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>المريض</th>
+              <th>الهاتف</th>
+              <th>الفحص</th>
+              <th>التاريخ</th>
+              <th>الوقت</th>
+              <th>الحالة</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+
+          <tbody id="appointments"></tbody>
+
+        </table>
+
+      </div>
+
+      <div id="loading" class="empty">
+        جاري تحميل الحجوزات...
+      </div>
 
     </div>
 
   </div>
 
 </div>
+
+
+<!-- PATIENT FILE PANEL -->
+
+<div id="patientPanel" class="patient-panel">
+
+  <div class="patient-box">
+
+    <div class="panel-header">
+      <h2>🩻 ملف المريض</h2>
+      <button class="close-btn" onclick="closePatientPanel()">✕ إغلاق</button>
+    </div>
+
+    <div id="patientDetails"></div>
+
+    <div class="coming-feature">
+
+      <h3>ملفات الفحص</h3>
+
+      <div class="feature-grid">
+
+        <div class="feature-item">
+          🖼️
+          <br><strong>صور الأشعة</strong>
+          <br><small>رفع وعرض صور الفحص</small>
+        </div>
+
+        <div class="feature-item">
+          📄
+          <br><strong>تقرير PDF</strong>
+          <br><small>رفع تقرير الأشعة</small>
+        </div>
+
+        <div class="feature-item">
+          📝
+          <br><strong>التقرير الطبي</strong>
+          <br><small>كتابة وحفظ التقرير</small>
+        </div>
+
+      </div>
+
+      <p style="color:#64748b;margin-bottom:0">
+        سيتم تفعيل رفع الملفات بعد إعداد التخزين الآمن في Supabase.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
 
 <script>
 
+/* ===============================
+   SUPABASE
+================================ */
+
 const SUPABASE_URL =
-  "https://kpxonagjclpmwwoczwog.supabase.co";
+"https://kpxonagjclpmwwoczwog.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_Svs8n3EuWTtMngtjw6MEnA_QU-dd0z8";
+"sb_publishable_Svs8n3EuWTtMngtjw6MEnA_QU-dd0z8";
 
 const client = supabase.createClient(
   SUPABASE_URL,
@@ -236,10 +757,22 @@ const client = supabase.createClient(
 );
 
 
-async function login() {
+/* ===============================
+   GLOBAL DATA
+================================ */
+
+let appointmentsData = [];
+let statusFilter = "all";
+
+
+/* ===============================
+   LOGIN
+================================ */
+
+async function login(){
 
   const email =
-    document.getElementById("email").value;
+    document.getElementById("email").value.trim();
 
   const password =
     document.getElementById("password").value;
@@ -247,43 +780,56 @@ async function login() {
   const message =
     document.getElementById("message");
 
-  message.innerText = "جاري تسجيل الدخول...";
-
-  const { data, error } =
-    await client.auth.signInWithPassword({
-      email: email,
-      password: password
-    });
-
-  if (error) {
-
-    message.innerText =
-      "خطأ في البريد الإلكتروني أو كلمة المرور";
-
+  if(!email || !password){
+    message.textContent =
+      "يرجى إدخال البريد الإلكتروني وكلمة المرور";
     return;
   }
 
-  message.innerText = "";
+  message.textContent =
+    "جاري تسجيل الدخول...";
+
+  const { error } =
+    await client.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if(error){
+    message.textContent =
+      "خطأ في البريد الإلكتروني أو كلمة المرور";
+    return;
+  }
+
+  message.textContent = "";
 
   showDashboard();
 }
 
 
-async function logout() {
+/* ===============================
+   LOGOUT
+================================ */
+
+async function logout(){
 
   await client.auth.signOut();
 
   document.getElementById("dashboard").style.display =
     "none";
 
-  document.getElementById("loginBox").style.display =
-    "block";
+  document.getElementById("loginPage").style.display =
+    "flex";
 }
 
 
-async function showDashboard() {
+/* ===============================
+   DASHBOARD
+================================ */
 
-  document.getElementById("loginBox").style.display =
+function showDashboard(){
+
+  document.getElementById("loginPage").style.display =
     "none";
 
   document.getElementById("dashboard").style.display =
@@ -293,280 +839,702 @@ async function showDashboard() {
 }
 
 
-async function loadAppointments() {
+/* ===============================
+   LOAD APPOINTMENTS
+================================ */
+
+async function loadAppointments(){
 
   const loading =
     document.getElementById("loading");
 
-  const table =
-    document.getElementById("appointments");
-
-  loading.innerText =
+  loading.style.display = "block";
+  loading.textContent =
     "جاري تحميل الحجوزات...";
 
-  table.innerHTML = "";
-
-  const { data, error } =
+  const { data,error } =
     await client
       .from("appointments")
       .select("*")
-      .order("created_at", {
-        ascending: false
+      .order("created_at",{
+        ascending:false
       });
 
-  if (error) {
+  if(error){
 
-    loading.innerText =
+    console.error(error);
+
+    loading.textContent =
       "حدث خطأ أثناء تحميل الحجوزات: " +
       error.message;
 
     return;
   }
 
-  loading.innerText = "";
+  appointmentsData = data || [];
 
-if (!data || data.length === 0) {
-    document.getElementById("pendingCount").textContent = 0;
-    document.getElementById("completedCount").textContent = 0;
-    document.getElementById("cancelledCount").textContent = 0;
-  
+  updateStatistics();
 
-    loading.innerText = "لا توجد حجوزات حالياً";
-    return;
+  renderAppointments(
+    appointmentsData
+  );
 }
 
-const pendingCount = data.filter(item =>
-    !item.status || item.status === "pending"
-).length;
 
-const completedCount = data.filter(item =>
-    item.status === "completed"
-).length;
+/* ===============================
+   STATISTICS
+================================ */
 
-const cancelledCount = data.filter(item =>
-    item.status === "cancelled"
-).length;
+function updateStatistics(){
 
-document.getElementById("pendingCount").textContent = pendingCount;
-document.getElementById("completedCount").textContent = completedCount;
-document.getElementById("cancelledCount").textContent = cancelledCount;
+  const total =
+    appointmentsData.length;
 
- data.forEach(item => {
+  const pending =
+    appointmentsData.filter(item =>
+      !item.status ||
+      item.status === "pending"
+    ).length;
 
-    const row =
-        document.createElement("tr");
+  const completed =
+    appointmentsData.filter(item =>
+      item.status === "completed"
+    ).length;
 
-    row.dataset.status = item.status || "pending";
+  const cancelled =
+    appointmentsData.filter(item =>
+      item.status === "cancelled"
+    ).length;
 
-    const values = [
-      item.name || item.patient_name || "-",
-      item.phone || "-",
-      item.exam || item.exam_type || "-",
-      item.date || item.appointment_date || "-",
-      item.time || item.appointment_time || "-",
-      item.status === "completed" ? "🟢 تم الفحص" :
-item.status === "cancelled" ? "🔴 ملغي" :
-"🟡 قيد الانتظار"
-    ];
+  document.getElementById("totalCount").textContent =
+    total;
 
-    values.forEach(value => {
-      const td = document.createElement("td");
-      td.textContent = value;
-      row.appendChild(td);
-    });
-    const actionTd = document.createElement("td");
+  document.getElementById("pendingCount").textContent =
+    pending;
 
-const deleteButton = document.createElement("button");
-    const statusButton = document.createElement("button");
-statusButton.textContent = "🔄 تغيير الحالة";
-statusButton.style.background = "#f39c12";
-statusButton.style.color = "white";
-statusButton.style.padding = "7px 12px";
-statusButton.style.border = "none";
-statusButton.style.borderRadius = "6px";
-statusButton.style.cursor = "pointer";
-statusButton.style.marginLeft = "5px";
-    statusButton.onclick = async () => {
+  document.getElementById("completedCount").textContent =
+    completed;
 
-  const currentStatus = item.status || "pending";
+  document.getElementById("cancelledCount").textContent =
+    cancelled;
+}
 
-  let newStatus;
 
-  if (currentStatus === "pending") {
-    newStatus = "completed";
-  } else if (currentStatus === "completed") {
-    newStatus = "cancelled";
-  } else {
-    newStatus = "pending";
-  }
+/* ===============================
+   RENDER TABLE
+================================ */
 
-  const { error } = await client
-    .from("appointments")
-    .update({ status: newStatus })
-    .eq("id", item.id);
+function renderAppointments(data){
 
-  if (error) {
-    alert("حدث خطأ: " + error.message);
+  const table =
+    document.getElementById("appointments");
+
+  const loading =
+    document.getElementById("loading");
+
+  table.innerHTML = "";
+
+  document.getElementById("visibleCount").textContent =
+    `عدد النتائج: ${data.length}`;
+
+  if(data.length === 0){
+
+    loading.style.display = "block";
+    loading.textContent =
+      "لا توجد حجوزات مطابقة.";
+
     return;
   }
 
-  loadAppointments();
-};
-deleteButton.textContent = "حذف 🗑️";
-deleteButton.style.background = "#c0392b";
-deleteButton.style.color = "white";
-deleteButton.style.padding = "7px 12px";
-deleteButton.style.border = "none";
-deleteButton.style.borderRadius = "6px";
-deleteButton.style.cursor = "pointer";
+  loading.style.display = "none";
 
-deleteButton.onclick = async () => {
-    if (!confirm("هل أنت متأكد من حذف هذا الحجز؟")) return;
+  data.forEach(item => {
 
-    const { error } = await client
-        .from("appointments")
-        .delete()
-        .eq("id", item.id);
+    const row =
+      document.createElement("tr");
 
-    if (error) {
-        alert("حدث خطأ أثناء الحذف: " + error.message);
-        return;
-    }
 
-    alert("تم حذف الحجز بنجاح ✅");
-    loadAppointments();
-};
-const editButton = document.createElement("button");
-editButton.textContent = "✏️ تعديل";
-editButton.style.background = "#087f9c";
-editButton.style.color = "white";
-editButton.style.padding = "7px 12px";
-editButton.style.border = "none";
-editButton.style.borderRadius = "6px";
-editButton.style.cursor = "pointer";
-editButton.style.marginLeft = "5px";
+    const patientName =
+      item.name ||
+      item.patient_name ||
+      "-";
 
-editButton.onclick = async () => {
-    const newName = prompt("اسم المريض:", item.name || item.patient_name || "");
-    if (newName === null) return;
+    const phone =
+      item.phone || "-";
 
-    const newPhone = prompt("رقم الهاتف:", item.phone || "");
-    if (newPhone === null) return;
+    const exam =
+      item.exam ||
+      item.exam_type ||
+      "-";
 
-    const newExam = prompt("نوع الفحص:", item.exam || item.exam_type || "");
-    if (newExam === null) return;
+    const date =
+      item.date ||
+      item.appointment_date ||
+      "-";
 
-    const newDate = prompt("تاريخ الموعد:", item.date || item.appointment_date || "");
-    if (newDate === null) return;
+    const time =
+      item.time ||
+      item.appointment_time ||
+      "-";
 
-    const newTime = prompt("وقت الموعد:", item.time || item.appointment_time || "");
-    if (newTime === null) return;
+    const status =
+      item.status || "pending";
 
-    const { error } = await client
-        .from("appointments")
-        .update({
-            patient_name: newName,
-            phone: newPhone,
-            exam_type: newExam,
-            appointment_date: newDate,
-            appointment_time: newTime
-        })
-        .eq("id", item.id);
 
-    if (error) {
-        alert("حدث خطأ أثناء التعديل: " + error.message);
-        return;
-    }
+    const nameTd =
+      document.createElement("td");
 
-    alert("✅ تم تعديل الحجز بنجاح");
-    loadAppointments();
-};
+    nameTd.innerHTML =
+      `<strong>${escapeHtml(patientName)}</strong>`;
 
-actionTd.appendChild(statusButton);
-actionTd.appendChild(editButton);
-actionTd.appendChild(deleteButton);
-row.appendChild(actionTd);
+    row.appendChild(nameTd);
+
+
+    [
+      phone,
+      exam,
+      date,
+      time
+    ].forEach(value => {
+
+      const td =
+        document.createElement("td");
+
+      td.textContent = value;
+
+      row.appendChild(td);
+
+    });
+
+
+    const statusTd =
+      document.createElement("td");
+
+    statusTd.innerHTML =
+      statusBadge(status);
+
+    row.appendChild(statusTd);
+
+
+    const actionsTd =
+      document.createElement("td");
+
+    actionsTd.className =
+      "actions";
+
+
+    const fileButton =
+      document.createElement("button");
+
+    fileButton.className =
+      "file-btn";
+
+    fileButton.textContent =
+      "📁 الملف";
+
+    fileButton.onclick = () =>
+      openPatientPanel(item);
+
+
+    const statusButton =
+      document.createElement("button");
+
+    statusButton.className =
+      "status-btn";
+
+    statusButton.textContent =
+      "🔄 الحالة";
+
+    statusButton.onclick = () =>
+      changeStatus(item);
+
+
+    const editButton =
+      document.createElement("button");
+
+    editButton.className =
+      "edit-btn";
+
+    editButton.textContent =
+      "✏️ تعديل";
+
+    editButton.onclick = () =>
+      editAppointment(item);
+
+
+    const deleteButton =
+      document.createElement("button");
+
+    deleteButton.className =
+      "delete-btn";
+
+    deleteButton.textContent =
+      "🗑️ حذف";
+
+    deleteButton.onclick = () =>
+      deleteAppointment(item);
+
+
+    actionsTd.appendChild(fileButton);
+    actionsTd.appendChild(statusButton);
+    actionsTd.appendChild(editButton);
+    actionsTd.appendChild(deleteButton);
+
+    row.appendChild(actionsTd);
 
     table.appendChild(row);
+
   });
 }
 
 
-async function checkSession() {
+/* ===============================
+   STATUS BADGE
+================================ */
+
+function statusBadge(status){
+
+  if(status === "completed")
+    return `<span class="badge completed">🟢 تم الفحص</span>`;
+
+  if(status === "cancelled")
+    return `<span class="badge cancelled">🔴 ملغي</span>`;
+
+  return `<span class="badge pending">🟡 قيد الانتظار</span>`;
+}
+
+
+/* ===============================
+   FILTERS
+================================ */
+
+function setStatusFilter(status){
+
+  statusFilter = status;
+
+  applyFilters();
+}
+
+
+function applyFilters(){
+
+  const search =
+    document.getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const date =
+    document.getElementById("dateFilter")
+      .value;
+
+  const exam =
+    document.getElementById("examFilter")
+      .value
+      .toLowerCase();
+
+
+  const filtered =
+    appointmentsData.filter(item => {
+
+      const patientName =
+        String(
+          item.name ||
+          item.patient_name ||
+          ""
+        ).toLowerCase();
+
+      const phone =
+        String(item.phone || "")
+          .toLowerCase();
+
+      const itemExam =
+        String(
+          item.exam ||
+          item.exam_type ||
+          ""
+        ).toLowerCase();
+
+      const itemDate =
+        String(
+          item.date ||
+          item.appointment_date ||
+          ""
+        );
+
+      const itemStatus =
+        item.status || "pending";
+
+
+      const searchMatch =
+        !search ||
+        patientName.includes(search) ||
+        phone.includes(search);
+
+      const dateMatch =
+        !date ||
+        itemDate === date;
+
+      const examMatch =
+        !exam ||
+        itemExam.includes(exam);
+
+      const statusMatch =
+        statusFilter === "all" ||
+        itemStatus === statusFilter;
+
+
+      return (
+        searchMatch &&
+        dateMatch &&
+        examMatch &&
+        statusMatch
+      );
+
+    });
+
+
+  renderAppointments(filtered);
+}
+
+
+function showToday(){
+
+  const today =
+    new Date();
+
+  const year =
+    today.getFullYear();
+
+  const month =
+    String(today.getMonth()+1)
+      .padStart(2,"0");
+
+  const day =
+    String(today.getDate())
+      .padStart(2,"0");
+
+  document.getElementById("dateFilter").value =
+    `${year}-${month}-${day}`;
+
+  applyFilters();
+}
+
+
+function resetFilters(){
+
+  document.getElementById("searchInput").value =
+    "";
+
+  document.getElementById("dateFilter").value =
+    "";
+
+  document.getElementById("examFilter").value =
+    "";
+
+  statusFilter = "all";
+
+  renderAppointments(
+    appointmentsData
+  );
+}
+
+
+/* ===============================
+   CHANGE STATUS
+================================ */
+
+async function changeStatus(item){
+
+  const current =
+    item.status || "pending";
+
+  let newStatus;
+
+  if(current === "pending")
+    newStatus = "completed";
+
+  else if(current === "completed")
+    newStatus = "cancelled";
+
+  else
+    newStatus = "pending";
+
+
+  const { error } =
+    await client
+      .from("appointments")
+      .update({
+        status:newStatus
+      })
+      .eq("id",item.id);
+
+
+  if(error){
+
+    alert(
+      "حدث خطأ أثناء تغيير الحالة: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  await loadAppointments();
+}
+
+
+/* ===============================
+   EDIT
+================================ */
+
+async function editAppointment(item){
+
+  const newName =
+    prompt(
+      "اسم المريض:",
+      item.name ||
+      item.patient_name ||
+      ""
+    );
+
+  if(newName === null)
+    return;
+
+
+  const newPhone =
+    prompt(
+      "رقم الهاتف:",
+      item.phone || ""
+    );
+
+  if(newPhone === null)
+    return;
+
+
+  const newExam =
+    prompt(
+      "نوع الفحص:",
+      item.exam ||
+      item.exam_type ||
+      ""
+    );
+
+  if(newExam === null)
+    return;
+
+
+  const newDate =
+    prompt(
+      "تاريخ الموعد:",
+      item.date ||
+      item.appointment_date ||
+      ""
+    );
+
+  if(newDate === null)
+    return;
+
+
+  const newTime =
+    prompt(
+      "وقت الموعد:",
+      item.time ||
+      item.appointment_time ||
+      ""
+    );
+
+  if(newTime === null)
+    return;
+
+
+  const { error } =
+    await client
+      .from("appointments")
+      .update({
+        patient_name:newName,
+        phone:newPhone,
+        exam_type:newExam,
+        appointment_date:newDate,
+        appointment_time:newTime
+      })
+      .eq("id",item.id);
+
+
+  if(error){
+
+    alert(
+      "حدث خطأ أثناء التعديل: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "تم تعديل بيانات الحجز بنجاح ✅"
+  );
+
+  await loadAppointments();
+}
+
+
+/* ===============================
+   DELETE
+================================ */
+
+async function deleteAppointment(item){
+
+  const ok =
+    confirm(
+      "هل أنت متأكد من حذف هذا الحجز؟"
+    );
+
+  if(!ok)
+    return;
+
+
+  const { error } =
+    await client
+      .from("appointments")
+      .delete()
+      .eq("id",item.id);
+
+
+  if(error){
+
+    alert(
+      "حدث خطأ أثناء الحذف: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "تم حذف الحجز بنجاح ✅"
+  );
+
+  await loadAppointments();
+}
+
+
+/* ===============================
+   PATIENT FILE
+================================ */
+
+function openPatientPanel(item){
+
+  const patientName =
+    item.name ||
+    item.patient_name ||
+    "-";
+
+  const phone =
+    item.phone || "-";
+
+  const exam =
+    item.exam ||
+    item.exam_type ||
+    "-";
+
+  const date =
+    item.date ||
+    item.appointment_date ||
+    "-";
+
+  const time =
+    item.time ||
+    item.appointment_time ||
+    "-";
+
+
+  document.getElementById(
+    "patientDetails"
+  ).innerHTML = `
+
+    <div class="patient-info">
+
+      <div class="info-item">
+        <strong>👤 اسم المريض</strong>
+        <br>${escapeHtml(patientName)}
+      </div>
+
+      <div class="info-item">
+        <strong>📞 رقم الهاتف</strong>
+        <br>${escapeHtml(phone)}
+      </div>
+
+      <div class="info-item">
+        <strong>🩻 نوع الفحص</strong>
+        <br>${escapeHtml(exam)}
+      </div>
+
+      <div class="info-item">
+        <strong>📅 الموعد</strong>
+        <br>${escapeHtml(date)}
+        &nbsp;
+        ${escapeHtml(time)}
+      </div>
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "patientPanel"
+  ).style.display =
+    "block";
+}
+
+
+function closePatientPanel(){
+
+  document.getElementById(
+    "patientPanel"
+  ).style.display =
+    "none";
+}
+
+
+/* ===============================
+   SECURITY HELPER
+================================ */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+/* ===============================
+   SESSION
+================================ */
+
+async function checkSession(){
 
   const {
-    data: { session }
+    data:{session}
   } =
     await client.auth.getSession();
 
-  if (session) {
-    showDashboard();
-  }
 
+  if(session)
+    showDashboard();
 }
+
 
 checkSession();
 
-  function searchAppointments() {
-    const input = document.getElementById("searchInput");
-    const filter = input.value.toLowerCase().trim();
-    const table = document.getElementById("appointments");
-    const rows = table.getElementsByTagName("tr");
-
-    for (let i = 0; i < rows.length; i++) {
-        const text = rows[i].textContent.toLowerCase();
-
-        if (text.includes(filter)) {
-            rows[i].style.display = "";
-        } else {
-            rows[i].style.display = "none";
-        }
-    }
-}
-function filterByDate() {
-    const selectedDate = document.getElementById("dateFilter").value;
-    const table = document.getElementById("appointments");
-    const rows = table.getElementsByTagName("tr");
-
-    for (let i = 0; i < rows.length; i++) {
-        const text = rows[i].textContent;
-
-        if (selectedDate === "" || text.includes(selectedDate)) {
-            rows[i].style.display = "";
-        } else {
-            rows[i].style.display = "none";
-        }
-    }
-}
-function filterByExam() {
-    const selectedExam = document.getElementById("examFilter").value;
-    const table = document.getElementById("appointments");
-    const rows = table.getElementsByTagName("tr");
-
-    for (let i = 0; i < rows.length; i++) {
-        const text = rows[i].textContent;
-
-        if (selectedExam === "" || text.includes(selectedExam)) {
-            rows[i].style.display = "";
-        } else {
-            rows[i].style.display = "none";
-        }
-    }
-}
-  function filterByStatus(status) {
-    const table = document.getElementById("appointments");
-    const rows = table.getElementsByTagName("tr");
-
-    for (let i = 0; i < rows.length; i++) {
-        const rowStatus = rows[i].dataset.status;
-
-        if (status === "all" || rowStatus === status) {
-            rows[i].style.display = "";
-        } else {
-            rows[i].style.display = "none";
-        }
-    }
-}
 </script>
 
 </body>
