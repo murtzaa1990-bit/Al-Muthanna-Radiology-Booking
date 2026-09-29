@@ -333,7 +333,53 @@ deleteButton.onclick = async () => {
     alert("تم حذف الحجز بنجاح ✅");
     loadAppointments();
 };
+const editButton = document.createElement("button");
+editButton.textContent = "✏️ تعديل";
+editButton.style.background = "#087f9c";
+editButton.style.color = "white";
+editButton.style.padding = "7px 12px";
+editButton.style.border = "none";
+editButton.style.borderRadius = "6px";
+editButton.style.cursor = "pointer";
+editButton.style.marginLeft = "5px";
 
+editButton.onclick = async () => {
+    const newName = prompt("اسم المريض:", item.name || item.patient_name || "");
+    if (newName === null) return;
+
+    const newPhone = prompt("رقم الهاتف:", item.phone || "");
+    if (newPhone === null) return;
+
+    const newExam = prompt("نوع الفحص:", item.exam || item.exam_type || "");
+    if (newExam === null) return;
+
+    const newDate = prompt("تاريخ الموعد:", item.date || item.appointment_date || "");
+    if (newDate === null) return;
+
+    const newTime = prompt("وقت الموعد:", item.time || item.appointment_time || "");
+    if (newTime === null) return;
+
+    const { error } = await client
+        .from("appointments")
+        .update({
+            patient_name: newName,
+            phone: newPhone,
+            exam_type: newExam,
+            appointment_date: newDate,
+            appointment_time: newTime
+        })
+        .eq("id", item.id);
+
+    if (error) {
+        alert("حدث خطأ أثناء التعديل: " + error.message);
+        return;
+    }
+
+    alert("✅ تم تعديل الحجز بنجاح");
+    loadAppointments();
+};
+
+actionTd.appendChild(editButton);
 actionTd.appendChild(deleteButton);
 row.appendChild(actionTd);
 
