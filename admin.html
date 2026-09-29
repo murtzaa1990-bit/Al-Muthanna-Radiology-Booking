@@ -306,6 +306,36 @@ async function loadAppointments() {
       td.textContent = value;
       row.appendChild(td);
     });
+    const actionTd = document.createElement("td");
+
+const deleteButton = document.createElement("button");
+deleteButton.textContent = "حذف 🗑️";
+deleteButton.style.background = "#c0392b";
+deleteButton.style.color = "white";
+deleteButton.style.padding = "7px 12px";
+deleteButton.style.border = "none";
+deleteButton.style.borderRadius = "6px";
+deleteButton.style.cursor = "pointer";
+
+deleteButton.onclick = async () => {
+    if (!confirm("هل أنت متأكد من حذف هذا الحجز؟")) return;
+
+    const { error } = await client
+        .from("appointments")
+        .delete()
+        .eq("id", item.id);
+
+    if (error) {
+        alert("حدث خطأ أثناء الحذف: " + error.message);
+        return;
+    }
+
+    alert("تم حذف الحجز بنجاح ✅");
+    loadAppointments();
+};
+
+actionTd.appendChild(deleteButton);
+row.appendChild(actionTd);
 
     table.appendChild(row);
   });
