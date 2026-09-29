@@ -153,6 +153,13 @@
 
     <div class="card" style="overflow-x:auto;">
 
+        <input
+  type="text"
+  id="searchInput"
+  placeholder="🔍 ابحث باسم المريض أو رقم الهاتف"
+  oninput="searchAppointments()"
+  style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; font-size:16px;"
+>
       <table>
         <thead>
           <tr>
@@ -442,6 +449,23 @@ async function checkSession() {
 }
 
 checkSession();
+
+  function searchAppointments() {
+    const input = document.getElementById("searchInput");
+    const filter = input.value.toLowerCase().trim();
+    const table = document.getElementById("appointments");
+    const rows = table.getElementsByTagName("tr");
+
+    for (let i = 0; i < rows.length; i++) {
+        const text = rows[i].textContent.toLowerCase();
+
+        if (text.includes(filter)) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+}
 
 </script>
 
