@@ -323,16 +323,17 @@ statusButton.style.borderRadius = "6px";
 statusButton.style.cursor = "pointer";
 statusButton.style.marginLeft = "5px";
     statusButton.onclick = async () => {
-  const newStatus = prompt(
-    "اكتب حالة الحجز:\npending = قيد الانتظار\ncompleted = تم الفحص\ncancelled = ملغي",
-    item.status || "pending"
-  );
 
-  if (newStatus === null) return;
+  const currentStatus = item.status || "pending";
 
-  if (!["pending", "completed", "cancelled"].includes(newStatus)) {
-    alert("الحالة غير صحيحة");
-    return;
+  let newStatus;
+
+  if (currentStatus === "pending") {
+    newStatus = "completed";
+  } else if (currentStatus === "completed") {
+    newStatus = "cancelled";
+  } else {
+    newStatus = "pending";
   }
 
   const { error } = await client
@@ -345,7 +346,6 @@ statusButton.style.marginLeft = "5px";
     return;
   }
 
-  alert("✅ تم تغيير حالة الحجز");
   loadAppointments();
 };
 deleteButton.textContent = "حذف 🗑️";
