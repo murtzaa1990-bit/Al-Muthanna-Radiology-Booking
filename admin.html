@@ -313,6 +313,41 @@ item.status === "cancelled" ? "🔴 ملغي" :
     const actionTd = document.createElement("td");
 
 const deleteButton = document.createElement("button");
+    const statusButton = document.createElement("button");
+statusButton.textContent = "🔄 تغيير الحالة";
+statusButton.style.background = "#f39c12";
+statusButton.style.color = "white";
+statusButton.style.padding = "7px 12px";
+statusButton.style.border = "none";
+statusButton.style.borderRadius = "6px";
+statusButton.style.cursor = "pointer";
+statusButton.style.marginLeft = "5px";
+    statusButton.onclick = async () => {
+  const newStatus = prompt(
+    "اكتب حالة الحجز:\npending = قيد الانتظار\ncompleted = تم الفحص\ncancelled = ملغي",
+    item.status || "pending"
+  );
+
+  if (newStatus === null) return;
+
+  if (!["pending", "completed", "cancelled"].includes(newStatus)) {
+    alert("الحالة غير صحيحة");
+    return;
+  }
+
+  const { error } = await client
+    .from("appointments")
+    .update({ status: newStatus })
+    .eq("id", item.id);
+
+  if (error) {
+    alert("حدث خطأ: " + error.message);
+    return;
+  }
+
+  alert("✅ تم تغيير حالة الحجز");
+  loadAppointments();
+};
 deleteButton.textContent = "حذف 🗑️";
 deleteButton.style.background = "#c0392b";
 deleteButton.style.color = "white";
@@ -383,6 +418,7 @@ editButton.onclick = async () => {
     loadAppointments();
 };
 
+actionTd.appendChild(statusButton);
 actionTd.appendChild(editButton);
 actionTd.appendChild(deleteButton);
 row.appendChild(actionTd);
