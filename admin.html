@@ -1,55 +1,333 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>إدارة الحجوزات - مستشفى المثنى الأهلي</title>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       background: #f4f8fb;
-      margin: 0;
-      padding: 20px;
       color: #17202a;
     }
 
+    header {
+      background: #087f9c;
+      color: white;
+      padding: 22px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+    }
+
     .container {
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    h1 {
-      text-align: center;
-      color: #087f9c;
-    }
-
-    .notice {
-      background: white;
+      max-width: 1100px;
+      margin: 30px auto;
       padding: 20px;
-      border-radius: 12px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      background: #087f9c;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .logout {
+      background: #c0392b;
+      float: left;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
       text-align: center;
-      margin-top: 30px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    th {
+      background: #087f9c;
+      color: white;
+    }
+
+    #dashboard {
+      display: none;
+    }
+
+    #message {
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 700px) {
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 7px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<header>
+  <h1>مستشفى المثنى الأهلي</h1>
+  <div>قسم الأشعة والمفراس</div>
+</header>
 
-    <h1>لوحة إدارة الحجوزات</h1>
+<div class="container">
 
-    <div class="notice">
-      <h2>قسم الأشعة والمفراس</h2>
-      <p>مستشفى المثنى الأهلي</p>
-      <p>جاري تجهيز نظام إدارة الحجوزات...</p>
+  <div id="loginBox" class="card">
+    <h2>تسجيل دخول الإدارة</h2>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="البريد الإلكتروني"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="كلمة المرور"
+    >
+
+    <button onclick="login()">تسجيل الدخول</button>
+
+    <div id="message"></div>
+  </div>
+
+  <div id="dashboard">
+
+    <div class="card">
+      <button class="logout" onclick="logout()">تسجيل الخروج</button>
+
+      <h2>حجوزات قسم الأشعة والمفراس</h2>
+
+      <p>الحجوزات المسجلة في النظام</p>
+    </div>
+
+    <div class="card" style="overflow-x:auto;">
+
+      <table>
+        <thead>
+          <tr>
+            <th>الاسم</th>
+            <th>رقم الهاتف</th>
+            <th>نوع الفحص</th>
+            <th>التاريخ</th>
+            <th>الوقت</th>
+          </tr>
+        </thead>
+
+        <tbody id="appointments">
+        </tbody>
+
+      </table>
+
+      <p id="loading">جاري تحميل الحجوزات...</p>
+
     </div>
 
   </div>
+
+</div>
+
+<script>
+
+const SUPABASE_URL =
+  "https://kpxonagjclpmwwoczwog.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Svs8n3EuWTtMngtjw6MEnA_QU-dd0z8";
+
+const client = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+async function login() {
+
+  const email =
+    document.getElementById("email").value;
+
+  const password =
+    document.getElementById("password").value;
+
+  const message =
+    document.getElementById("message");
+
+  message.innerText = "جاري تسجيل الدخول...";
+
+  const { data, error } =
+    await client.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+  if (error) {
+
+    message.innerText =
+      "خطأ في البريد الإلكتروني أو كلمة المرور";
+
+    return;
+  }
+
+  message.innerText = "";
+
+  showDashboard();
+}
+
+
+async function logout() {
+
+  await client.auth.signOut();
+
+  document.getElementById("dashboard").style.display =
+    "none";
+
+  document.getElementById("loginBox").style.display =
+    "block";
+}
+
+
+async function showDashboard() {
+
+  document.getElementById("loginBox").style.display =
+    "none";
+
+  document.getElementById("dashboard").style.display =
+    "block";
+
+  loadAppointments();
+}
+
+
+async function loadAppointments() {
+
+  const loading =
+    document.getElementById("loading");
+
+  const table =
+    document.getElementById("appointments");
+
+  loading.innerText =
+    "جاري تحميل الحجوزات...";
+
+  table.innerHTML = "";
+
+  const { data, error } =
+    await client
+      .from("appointments")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+
+    loading.innerText =
+      "حدث خطأ أثناء تحميل الحجوزات: " +
+      error.message;
+
+    return;
+  }
+
+  loading.innerText = "";
+
+  if (!data || data.length === 0) {
+
+    loading.innerText =
+      "لا توجد حجوزات حالياً.";
+
+    return;
+  }
+
+  data.forEach(item => {
+
+    const row =
+      document.createElement("tr");
+
+    const values = [
+      item.name || item.patient_name || "-",
+      item.phone || "-",
+      item.exam || item.exam_type || "-",
+      item.date || item.appointment_date || "-",
+      item.time || item.appointment_time || "-"
+    ];
+
+    values.forEach(value => {
+      const td = document.createElement("td");
+      td.textContent = value;
+      row.appendChild(td);
+    });
+
+    table.appendChild(row);
+  });
+}
+
+
+async function checkSession() {
+
+  const {
+    data: { session }
+  } =
+    await client.auth.getSession();
+
+  if (session) {
+    showDashboard();
+  }
+
+}
+
+checkSession();
+
+</script>
 
 </body>
 </html>
