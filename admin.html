@@ -12,16 +12,13 @@
 :root{
   --primary:#087f9c;
   --primary-dark:#05647b;
-  --secondary:#0ea5a8;
   --bg:#f4f8fb;
   --card:#ffffff;
   --text:#17202a;
   --muted:#6b7280;
   --border:#e5e7eb;
   --success:#16a34a;
-  --warning:#f59e0b;
   --danger:#dc2626;
-  --blue:#2563eb;
 }
 
 *{box-sizing:border-box}
@@ -32,8 +29,6 @@ body{
   background:var(--bg);
   color:var(--text);
 }
-
-/* LOGIN */
 
 .login-page{
   min-height:100vh;
@@ -128,8 +123,6 @@ button{
   color:var(--danger);
 }
 
-/* DASHBOARD */
-
 #dashboard{
   display:none;
 }
@@ -192,16 +185,8 @@ button{
   margin-bottom:22px;
 }
 
-.hero h1{
-  margin:0 0 8px;
-}
-
-.hero p{
-  margin:0;
-  opacity:.9;
-}
-
-/* STATS */
+.hero h1{margin:0 0 8px}
+.hero p{margin:0;opacity:.9}
 
 .stats{
   display:grid;
@@ -217,22 +202,6 @@ button{
   box-shadow:0 5px 20px rgba(0,0,0,.05);
 }
 
-.stat-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.stat-icon{
-  width:45px;
-  height:45px;
-  border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-}
-
 .stat-number{
   font-size:30px;
   font-weight:bold;
@@ -244,30 +213,12 @@ button{
   margin-top:5px;
 }
 
-.yellow{background:#fff7db}
-.green{background:#dcfce7}
-.red{background:#fee2e2}
-.blue{background:#dbeafe}
-
-/* CARDS */
-
 .card{
   background:white;
   border-radius:18px;
   padding:20px;
   margin-bottom:20px;
   box-shadow:0 5px 20px rgba(0,0,0,.05);
-}
-
-.card-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
-}
-
-.card-title h3{
-  margin:0;
 }
 
 .filters{
@@ -288,15 +239,7 @@ button{
   color:#07566c;
 }
 
-.status-buttons button:hover{
-  background:#d8eef3;
-}
-
-/* TABLE */
-
-.table-wrap{
-  overflow-x:auto;
-}
+.table-wrap{overflow-x:auto}
 
 table{
   width:100%;
@@ -306,9 +249,7 @@ table{
 
 th{
   background:#f8fafc;
-  color:#475569;
   padding:14px 10px;
-  text-align:center;
   border-bottom:1px solid var(--border);
 }
 
@@ -316,10 +257,6 @@ td{
   padding:13px 10px;
   text-align:center;
   border-bottom:1px solid #f0f0f0;
-}
-
-tbody tr:hover{
-  background:#fafcfd;
 }
 
 .badge{
@@ -330,20 +267,9 @@ tbody tr:hover{
   font-weight:bold;
 }
 
-.pending{
-  background:#fff7db;
-  color:#9a6700;
-}
-
-.completed{
-  background:#dcfce7;
-  color:#166534;
-}
-
-.cancelled{
-  background:#fee2e2;
-  color:#991b1b;
-}
+.pending{background:#fff7db;color:#9a6700}
+.completed{background:#dcfce7;color:#166534}
+.cancelled{background:#fee2e2;color:#991b1b}
 
 .actions{
   display:flex;
@@ -352,33 +278,16 @@ tbody tr:hover{
   flex-wrap:wrap;
 }
 
-.edit-btn{
-  background:#e0f2fe;
-  color:#0369a1;
-}
-
-.status-btn{
-  background:#fef3c7;
-  color:#92400e;
-}
-
-.delete-btn{
-  background:#fee2e2;
-  color:#b91c1c;
-}
-
-.file-btn{
-  background:#ede9fe;
-  color:#6d28d9;
-}
+.file-btn{background:#ede9fe;color:#6d28d9}
+.status-btn{background:#fef3c7;color:#92400e}
+.edit-btn{background:#e0f2fe;color:#0369a1}
+.delete-btn{background:#fee2e2;color:#b91c1c}
 
 .empty{
   text-align:center;
   padding:35px;
   color:var(--muted);
 }
-
-/* PATIENT PANEL */
 
 .patient-panel{
   display:none;
@@ -422,7 +331,7 @@ tbody tr:hover{
   border-radius:10px;
 }
 
-.coming-feature{
+.upload-box{
   border:2px dashed #dbe4ea;
   border-radius:15px;
   padding:20px;
@@ -430,320 +339,277 @@ tbody tr:hover{
   margin-top:15px;
 }
 
-.coming-feature h3{
-  margin-top:0;
-}
-
-.feature-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.feature-item{
-  padding:15px;
-  background:#f8fafc;
-  border-radius:12px;
-}
-
-/* MOBILE */
-
 @media(max-width:900px){
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .filters{
-    grid-template-columns:1fr;
-  }
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .filters{grid-template-columns:1fr}
 }
 
 @media(max-width:600px){
-  .container{
-    padding:12px;
-  }
-
-  .topbar{
-    padding:12px;
-  }
-
-  .brand span{
-    display:none;
-  }
-
-  .hero{
-    padding:20px;
-  }
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
-
-  .stat{
-    padding:15px;
-  }
-
-  .stat-number{
-    font-size:24px;
-  }
-
-  .patient-info,
-  .feature-grid{
-    grid-template-columns:1fr;
-  }
+  .container{padding:12px}
+  .stats{grid-template-columns:1fr 1fr}
+  .patient-info{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-
 <div id="loginPage" class="login-page">
 
-  <div class="login-card">
+<div class="login-card">
 
-    <div class="login-logo">🩻</div>
+<div class="login-logo">🩻</div>
 
-    <h1>Radiology System</h1>
+<h1>Radiology System</h1>
 
-    <p>مستشفى المثنى الأهلي<br>قسم الأشعة والمفراس</p>
+<p>
+مستشفى المثنى الأهلي<br>
+قسم الأشعة والمفراس
+</p>
 
-    <div class="field">
-      <label>البريد الإلكتروني</label>
-      <input type="email" id="email" placeholder="admin@example.com">
-    </div>
+<div id="normalLogin">
 
-    <div class="field">
-      <label>كلمة المرور</label>
-      <input type="password" id="password" placeholder="••••••••">
-    </div>
+<div class="field">
+<label>البريد الإلكتروني</label>
+<input type="email" id="email" placeholder="admin@example.com">
+</div>
 
-    <button class="primary-btn" onclick="login()">
-      تسجيل دخول الإدارة
-    </button>
+<div class="field">
+<label>كلمة المرور</label>
+<input type="password" id="password" placeholder="••••••••">
+</div>
 
-    <div id="message"></div>
+<button class="primary-btn" onclick="login()">
+تسجيل دخول الإدارة
+</button>
 
-  </div>
+<div id="message"></div>
 
 </div>
 
 
-<!-- DASHBOARD -->
+<div id="recoveryBox" style="display:none">
+
+<h2 style="text-align:center;color:#087f9c">
+🔐 تعيين كلمة مرور جديدة
+</h2>
+
+<p>
+اكتب كلمة المرور الجديدة
+</p>
+
+<div class="field">
+<label>كلمة المرور الجديدة</label>
+<input type="password" id="newPassword">
+</div>
+
+<div class="field">
+<label>تأكيد كلمة المرور</label>
+<input type="password" id="confirmPassword">
+</div>
+
+<button
+class="primary-btn"
+onclick="saveNewPassword()">
+حفظ كلمة المرور الجديدة
+</button>
+
+<div
+id="recoveryMessage"
+style="text-align:center;margin-top:15px">
+</div>
+
+</div>
+
+</div>
+</div>
+
 
 <div id="dashboard">
 
-  <div class="topbar">
+<div class="topbar">
 
-    <div class="brand">
-      <div class="brand-icon">🩻</div>
+<div class="brand">
+<div class="brand-icon">🩻</div>
 
-      <div>
-        <h2>مستشفى المثنى الأهلي</h2>
-        <span>Radiology & CT Management System</span>
-      </div>
-    </div>
+<div>
+<h2>مستشفى المثنى الأهلي</h2>
+<span>Radiology & CT Management System</span>
+</div>
 
-    <button class="logout" onclick="logout()">
-      تسجيل الخروج
-    </button>
+</div>
 
-  </div>
-
-
-  <div class="container">
-
-    <div class="hero">
-      <h1>لوحة إدارة قسم الأشعة والمفراس</h1>
-      <p>إدارة الحجوزات والمرضى والفحوصات من مكان واحد</p>
-    </div>
-
-
-    <!-- STATISTICS -->
-
-    <div class="stats">
-
-      <div class="stat">
-        <div class="stat-top">
-          <strong>كل الحجوزات</strong>
-          <div class="stat-icon blue">📋</div>
-        </div>
-        <div class="stat-number" id="totalCount">0</div>
-        <div class="stat-title">إجمالي الحجوزات</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-top">
-          <strong>قيد الانتظار</strong>
-          <div class="stat-icon yellow">⏳</div>
-        </div>
-        <div class="stat-number" id="pendingCount">0</div>
-        <div class="stat-title">بانتظار إجراء الفحص</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-top">
-          <strong>تم الفحص</strong>
-          <div class="stat-icon green">✓</div>
-        </div>
-        <div class="stat-number" id="completedCount">0</div>
-        <div class="stat-title">الفحوصات المكتملة</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-top">
-          <strong>ملغي</strong>
-          <div class="stat-icon red">✕</div>
-        </div>
-        <div class="stat-number" id="cancelledCount">0</div>
-        <div class="stat-title">الحجوزات الملغاة</div>
-      </div>
-
-    </div>
-
-
-    <!-- FILTERS -->
-
-    <div class="card">
-
-      <div class="card-title">
-        <h3>🔎 البحث والفلترة</h3>
-      </div>
-
-      <div class="filters">
-
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="ابحث باسم المريض أو رقم الهاتف..."
-          oninput="applyFilters()"
-        >
-
-        <input
-          id="dateFilter"
-          type="date"
-          onchange="applyFilters()"
-        >
-
-        <select id="examFilter" onchange="applyFilters()">
-          <option value="">جميع الفحوصات</option>
-          <option value="CT">CT - المفراس</option>
-          <option value="X-Ray">X-Ray - الأشعة</option>
-        </select>
-
-      </div>
-
-      <div class="status-buttons">
-        <button onclick="setStatusFilter('all')">📋 الكل</button>
-        <button onclick="setStatusFilter('pending')">🟡 قيد الانتظار</button>
-        <button onclick="setStatusFilter('completed')">🟢 تم الفحص</button>
-        <button onclick="setStatusFilter('cancelled')">🔴 ملغي</button>
-        <button onclick="showToday()">📅 حجوزات اليوم</button>
-        <button onclick="resetFilters()">↻ مسح الفلاتر</button>
-      </div>
-
-    </div>
-
-
-    <!-- APPOINTMENTS -->
-
-    <div class="card">
-
-      <div class="card-title">
-        <h3>📅 الحجوزات والمرضى</h3>
-        <span id="visibleCount"></span>
-      </div>
-
-      <div class="table-wrap">
-
-        <table>
-
-          <thead>
-            <tr>
-              <th>المريض</th>
-              <th>الهاتف</th>
-              <th>الفحص</th>
-              <th>التاريخ</th>
-              <th>الوقت</th>
-              <th>الحالة</th>
-              <th>الإجراءات</th>
-            </tr>
-          </thead>
-
-          <tbody id="appointments"></tbody>
-
-        </table>
-
-      </div>
-
-      <div id="loading" class="empty">
-        جاري تحميل الحجوزات...
-      </div>
-
-    </div>
-
-  </div>
+<button class="logout" onclick="logout()">
+تسجيل الخروج
+</button>
 
 </div>
 
 
-<!-- PATIENT FILE PANEL -->
+<div class="container">
+
+<div class="hero">
+<h1>لوحة إدارة قسم الأشعة والمفراس</h1>
+<p>إدارة الحجوزات والمرضى والفحوصات من مكان واحد</p>
+</div>
+
+
+<div class="stats">
+
+<div class="stat">
+<strong>📋 كل الحجوزات</strong>
+<div class="stat-number" id="totalCount">0</div>
+<div class="stat-title">إجمالي الحجوزات</div>
+</div>
+
+<div class="stat">
+<strong>⏳ قيد الانتظار</strong>
+<div class="stat-number" id="pendingCount">0</div>
+<div class="stat-title">بانتظار إجراء الفحص</div>
+</div>
+
+<div class="stat">
+<strong>✓ تم الفحص</strong>
+<div class="stat-number" id="completedCount">0</div>
+<div class="stat-title">الفحوصات المكتملة</div>
+</div>
+
+<div class="stat">
+<strong>✕ ملغي</strong>
+<div class="stat-number" id="cancelledCount">0</div>
+<div class="stat-title">الحجوزات الملغاة</div>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>🔎 البحث والفلترة</h3>
+
+<div class="filters">
+
+<input
+id="searchInput"
+placeholder="ابحث باسم المريض أو رقم الهاتف..."
+oninput="applyFilters()">
+
+<input
+id="dateFilter"
+type="date"
+onchange="applyFilters()">
+
+<select id="examFilter" onchange="applyFilters()">
+<option value="">جميع الفحوصات</option>
+<option value="CT">CT - المفراس</option>
+<option value="X-Ray">X-Ray - الأشعة</option>
+</select>
+
+</div>
+
+<div class="status-buttons">
+
+<button onclick="setStatusFilter('all')">📋 الكل</button>
+<button onclick="setStatusFilter('pending')">🟡 قيد الانتظار</button>
+<button onclick="setStatusFilter('completed')">🟢 تم الفحص</button>
+<button onclick="setStatusFilter('cancelled')">🔴 ملغي</button>
+<button onclick="showToday()">📅 حجوزات اليوم</button>
+<button onclick="resetFilters()">↻ مسح الفلاتر</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+📅 الحجوزات والمرضى
+<span id="visibleCount"></span>
+</h3>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>المريض</th>
+<th>الهاتف</th>
+<th>الفحص</th>
+<th>التاريخ</th>
+<th>الوقت</th>
+<th>الحالة</th>
+<th>الإجراءات</th>
+</tr>
+</thead>
+
+<tbody id="appointments"></tbody>
+
+</table>
+
+</div>
+
+<div id="loading" class="empty">
+جاري تحميل الحجوزات...
+</div>
+
+</div>
+
+</div>
+</div>
+
 
 <div id="patientPanel" class="patient-panel">
 
-  <div class="patient-box">
+<div class="patient-box">
 
-    <div class="panel-header">
-      <h2>🩻 ملف المريض</h2>
-      <button class="close-btn" onclick="closePatientPanel()">✕ إغلاق</button>
-    </div>
+<div class="panel-header">
 
-    <div id="patientDetails"></div>
+<h2>🩻 ملف المريض</h2>
 
-  <div class="coming-feature">
-
-  <h3>📁 ملفات الفحص</h3>
-
-  <p style="color:#64748b">
-    ارفع صور الأشعة أو تقرير PDF الخاص بالمريض
-  </p>
-
-  <input
-    type="file"
-    id="radiologyFile"
-    accept="image/*,.pdf,.zip,.dcm"
-    style="margin:15px 0"
-  >
-
-  <button
-    class="primary-btn"
-    type="button"
-    onclick="uploadRadiologyFile()"
-  >
-    📤 رفع ملف الفحص
-  </button>
-
-  <div
-    id="uploadMessage"
-    style="margin-top:15px;font-weight:bold"
-  ></div>
-
-  <div id="patientFiles" style="margin-top:20px"></div>
+<button
+class="close-btn"
+onclick="closePatientPanel()">
+✕ إغلاق
+</button>
 
 </div>
 
-  </div>
+<div id="patientDetails"></div>
 
+
+<div class="upload-box">
+
+<h3>📁 ملفات الفحص</h3>
+
+<p>
+ارفع صورة الفحص أو تقرير PDF
+</p>
+
+<input
+type="file"
+id="radiologyFile"
+accept="image/*,.pdf,.zip,.dcm">
+
+<button
+class="primary-btn"
+onclick="uploadRadiologyFile()">
+📤 رفع ملف الفحص
+</button>
+
+<div
+id="uploadMessage"
+style="margin-top:15px;font-weight:bold">
+</div>
+
+</div>
+
+</div>
 </div>
 
 
 <script>
-
-/* ===============================
-   SUPABASE
-================================ */
 
 const SUPABASE_URL =
 "https://kpxonagjclpmwwoczwog.supabase.co";
@@ -751,1074 +617,987 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_Svs8n3EuWTtMngtjw6MEnA_QU-dd0z8";
 
-const client = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+const client =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
-
-/* ===============================
-   GLOBAL DATA
-================================ */
-
-let appointmentsData = [];
-  let realtimeChannel = null;
-let statusFilter = "all";
+let appointmentsData=[];
+let currentPatient=null;
+let statusFilter="all";
+let realtimeChannel=null;
 
 
-/* ===============================
-   LOGIN
-================================ */
+/* LOGIN */
 
 async function login(){
 
-  const email =
-    document.getElementById("email").value.trim();
+const email =
+document.getElementById("email").value.trim();
 
-  const password =
-    document.getElementById("password").value;
+const password =
+document.getElementById("password").value;
 
-  const message =
-    document.getElementById("message");
+const message =
+document.getElementById("message");
 
-  if(!email || !password){
-    message.textContent =
-      "يرجى إدخال البريد الإلكتروني وكلمة المرور";
-    return;
-  }
+if(!email || !password){
+message.textContent =
+"يرجى إدخال البريد الإلكتروني وكلمة المرور";
+return;
+}
 
-  message.textContent =
-    "جاري تسجيل الدخول...";
+message.textContent="جاري تسجيل الدخول...";
 
-  const { error } =
-    await client.auth.signInWithPassword({
-      email,
-      password
-    });
+const {error} =
+await client.auth.signInWithPassword({
+email,
+password
+});
 
-  if(error){
-    message.textContent =
-      "خطأ في البريد الإلكتروني أو كلمة المرور";
-    return;
-  }
+if(error){
+message.textContent =
+"خطأ في البريد الإلكتروني أو كلمة المرور";
+return;
+}
 
-  message.textContent = "";
+message.textContent="";
+showDashboard();
 
-  showDashboard();
 }
 
 
-/* ===============================
-   LOGOUT
-================================ */
+/* PASSWORD RECOVERY */
+
+function showRecovery(){
+
+document.getElementById("normalLogin").style.display="none";
+document.getElementById("recoveryBox").style.display="block";
+
+}
+
+
+async function saveNewPassword(){
+
+const password =
+document.getElementById("newPassword").value;
+
+const confirm =
+document.getElementById("confirmPassword").value;
+
+const message =
+document.getElementById("recoveryMessage");
+
+if(password.length < 6){
+
+message.style.color="#dc2626";
+
+message.textContent =
+"كلمة المرور يجب أن تكون 6 أحرف على الأقل.";
+
+return;
+}
+
+if(password !== confirm){
+
+message.style.color="#dc2626";
+
+message.textContent =
+"كلمتا المرور غير متطابقتين.";
+
+return;
+}
+
+message.style.color="#6b7280";
+message.textContent="جاري حفظ كلمة المرور...";
+
+const {error} =
+await client.auth.updateUser({
+password
+});
+
+if(error){
+
+message.style.color="#dc2626";
+
+message.textContent =
+"تعذر تغيير كلمة المرور: " +
+error.message;
+
+return;
+}
+
+message.style.color="#16a34a";
+
+message.textContent =
+"تم تغيير كلمة المرور بنجاح ✅";
+
+await client.auth.signOut();
+
+setTimeout(()=>{
+
+window.location.href =
+window.location.origin +
+window.location.pathname;
+
+},1200);
+
+}
+
+
+client.auth.onAuthStateChange(
+(event)=>{
+
+if(event==="PASSWORD_RECOVERY"){
+showRecovery();
+}
+
+});
+
+
+if(
+window.location.hash.includes("type=recovery") ||
+window.location.search.includes("type=recovery")
+){
+showRecovery();
+}
+
+
+/* LOGOUT */
 
 async function logout(){
 
-  await client.auth.signOut();
+await client.auth.signOut();
 
-  document.getElementById("dashboard").style.display =
-    "none";
+document.getElementById("dashboard").style.display="none";
 
-  document.getElementById("loginPage").style.display =
-    "flex";
+document.getElementById("loginPage").style.display="flex";
+
 }
 
 
-/* ===============================
-   DASHBOARD
-================================ */
+/* DASHBOARD */
 
 function showDashboard(){
 
-  document.getElementById("loginPage").style.display =
-    "none";
+document.getElementById("loginPage").style.display="none";
 
-  document.getElementById("dashboard").style.display =
-    "block";
+document.getElementById("dashboard").style.display="block";
 
-  loadAppointments();
-  startRealtime();
+loadAppointments();
+startRealtime();
+
 }
 
 
-/* ===============================
-   LOAD APPOINTMENTS
-================================ */
+/* LOAD */
 
 async function loadAppointments(){
 
-  const loading =
-    document.getElementById("loading");
+const loading =
+document.getElementById("loading");
 
-  loading.style.display = "block";
-  loading.textContent =
-    "جاري تحميل الحجوزات...";
+loading.style.display="block";
 
-  const { data,error } =
-    await client
-      .from("appointments")
-      .select("*")
-      .order("created_at",{
-        ascending:false
-      });
+const {data,error} =
+await client
+.from("appointments")
+.select("*")
+.order("created_at",{ascending:false});
 
-  if(error){
+if(error){
 
-    console.error(error);
+loading.textContent =
+"حدث خطأ أثناء تحميل الحجوزات: "+
+error.message;
 
-    loading.textContent =
-      "حدث خطأ أثناء تحميل الحجوزات: " +
-      error.message;
+return;
+}
 
-    return;
-  }
+appointmentsData=data || [];
 
-  appointmentsData = data || [];
+updateStatistics();
+applyFilters();
 
-  updateStatistics();
-
-  renderAppointments(
-    appointmentsData
-  );
 }
 
 
-/* ===============================
-   STATISTICS
-================================ */
+/* STATISTICS */
 
 function updateStatistics(){
 
-  const total =
-    appointmentsData.length;
+document.getElementById("totalCount").textContent =
+appointmentsData.length;
 
-  const pending =
-    appointmentsData.filter(item =>
-      !item.status ||
-      item.status === "pending"
-    ).length;
+document.getElementById("pendingCount").textContent =
+appointmentsData.filter(x =>
+!x.status || x.status==="pending"
+).length;
 
-  const completed =
-    appointmentsData.filter(item =>
-      item.status === "completed"
-    ).length;
+document.getElementById("completedCount").textContent =
+appointmentsData.filter(x =>
+x.status==="completed"
+).length;
 
-  const cancelled =
-    appointmentsData.filter(item =>
-      item.status === "cancelled"
-    ).length;
+document.getElementById("cancelledCount").textContent =
+appointmentsData.filter(x =>
+x.status==="cancelled"
+).length;
 
-  document.getElementById("totalCount").textContent =
-    total;
-
-  document.getElementById("pendingCount").textContent =
-    pending;
-
-  document.getElementById("completedCount").textContent =
-    completed;
-
-  document.getElementById("cancelledCount").textContent =
-    cancelled;
 }
 
 
-/* ===============================
-   RENDER TABLE
-================================ */
+/* TABLE */
 
 function renderAppointments(data){
 
-  const table =
-    document.getElementById("appointments");
+const table =
+document.getElementById("appointments");
 
-  const loading =
-    document.getElementById("loading");
+const loading =
+document.getElementById("loading");
 
-  table.innerHTML = "";
+table.innerHTML="";
 
-  document.getElementById("visibleCount").textContent =
-    `عدد النتائج: ${data.length}`;
+document.getElementById("visibleCount").textContent =
+` — عدد النتائج: ${data.length}`;
 
-  if(data.length === 0){
+if(!data.length){
 
-    loading.style.display = "block";
-    loading.textContent =
-      "لا توجد حجوزات مطابقة.";
+loading.style.display="block";
+loading.textContent="لا توجد حجوزات مطابقة.";
+return;
 
-    return;
-  }
-
-  loading.style.display = "none";
-
-  data.forEach(item => {
-
-    const row =
-      document.createElement("tr");
-
-
-    const patientName =
-      item.name ||
-      item.patient_name ||
-      "-";
-
-    const phone =
-      item.phone || "-";
-
-    const exam =
-      item.exam ||
-      item.exam_type ||
-      "-";
-
-    const date =
-      item.date ||
-      item.appointment_date ||
-      "-";
-
-    const time =
-      item.time ||
-      item.appointment_time ||
-      "-";
-
-    const status =
-      item.status || "pending";
-
-
-    const nameTd =
-      document.createElement("td");
-
-    nameTd.innerHTML =
-      `<strong>${escapeHtml(patientName)}</strong>`;
-
-    row.appendChild(nameTd);
-
-
-    [
-      phone,
-      exam,
-      date,
-      time
-    ].forEach(value => {
-
-      const td =
-        document.createElement("td");
-
-      td.textContent = value;
-
-      row.appendChild(td);
-
-    });
-
-
-    const statusTd =
-      document.createElement("td");
-
-    statusTd.innerHTML =
-      statusBadge(status);
-
-    row.appendChild(statusTd);
-
-
-    const actionsTd =
-      document.createElement("td");
-
-    actionsTd.className =
-      "actions";
-
-
-    const fileButton =
-      document.createElement("button");
-
-    fileButton.className =
-      "file-btn";
-
-    fileButton.textContent =
-      "📁 الملف";
-
-    fileButton.onclick = () =>
-      openPatientPanel(item);
-
-
-    const statusButton =
-      document.createElement("button");
-
-    statusButton.className =
-      "status-btn";
-
-    statusButton.textContent =
-      "🔄 الحالة";
-
-    statusButton.onclick = () =>
-      changeStatus(item);
-
-
-    const editButton =
-      document.createElement("button");
-
-    editButton.className =
-      "edit-btn";
-
-    editButton.textContent =
-      "✏️ تعديل";
-
-    editButton.onclick = () =>
-      editAppointment(item);
-
-
-    const deleteButton =
-      document.createElement("button");
-
-    deleteButton.className =
-      "delete-btn";
-
-    deleteButton.textContent =
-      "🗑️ حذف";
-
-    deleteButton.onclick = () =>
-      deleteAppointment(item);
-
-
-    actionsTd.appendChild(fileButton);
-    actionsTd.appendChild(statusButton);
-    actionsTd.appendChild(editButton);
-    actionsTd.appendChild(deleteButton);
-
-    row.appendChild(actionsTd);
-
-    table.appendChild(row);
-
-  });
 }
 
+loading.style.display="none";
 
-/* ===============================
-   STATUS BADGE
-================================ */
+
+data.forEach(item=>{
+
+const row=document.createElement("tr");
+
+const name =
+item.name || item.patient_name || "-";
+
+const phone=item.phone || "-";
+
+const exam =
+item.exam || item.exam_type || "-";
+
+const date =
+item.date || item.appointment_date || "-";
+
+const time =
+item.time || item.appointment_time || "-";
+
+const status=item.status || "pending";
+
+
+row.innerHTML=`
+
+<td><strong>${escapeHtml(name)}</strong></td>
+
+<td>${escapeHtml(phone)}</td>
+
+<td>${escapeHtml(exam)}</td>
+
+<td>${escapeHtml(date)}</td>
+
+<td>${escapeHtml(time)}</td>
+
+<td>${statusBadge(status)}</td>
+
+<td class="actions"></td>
+
+`;
+
+const actions =
+row.querySelector(".actions");
+
+
+const file=document.createElement("button");
+
+file.className="file-btn";
+file.textContent="📁 الملف";
+
+file.onclick=()=>
+openPatientPanel(item);
+
+
+const statusBtn=document.createElement("button");
+
+statusBtn.className="status-btn";
+statusBtn.textContent="🔄 الحالة";
+
+statusBtn.onclick=()=>
+changeStatus(item);
+
+
+const edit=document.createElement("button");
+
+edit.className="edit-btn";
+edit.textContent="✏️ تعديل";
+
+edit.onclick=()=>
+editAppointment(item);
+
+
+const del=document.createElement("button");
+
+del.className="delete-btn";
+del.textContent="🗑️ حذف";
+
+del.onclick=()=>
+deleteAppointment(item);
+
+
+actions.append(
+file,
+statusBtn,
+edit,
+del
+);
+
+table.appendChild(row);
+
+});
+
+}
+
 
 function statusBadge(status){
 
-  if(status === "completed")
-    return `<span class="badge completed">🟢 تم الفحص</span>`;
+if(status==="completed")
+return `<span class="badge completed">🟢 تم الفحص</span>`;
 
-  if(status === "cancelled")
-    return `<span class="badge cancelled">🔴 ملغي</span>`;
+if(status==="cancelled")
+return `<span class="badge cancelled">🔴 ملغي</span>`;
 
-  return `<span class="badge pending">🟡 قيد الانتظار</span>`;
+return `<span class="badge pending">🟡 قيد الانتظار</span>`;
+
 }
 
 
-/* ===============================
-   FILTERS
-================================ */
+/* FILTER */
 
 function setStatusFilter(status){
 
-  statusFilter = status;
+statusFilter=status;
+applyFilters();
 
-  applyFilters();
 }
 
 
 function applyFilters(){
 
-  const search =
-    document.getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
+const search =
+document.getElementById("searchInput")
+.value.trim().toLowerCase();
 
-  const date =
-    document.getElementById("dateFilter")
-      .value;
+const date =
+document.getElementById("dateFilter").value;
 
-  const exam =
-    document.getElementById("examFilter")
-      .value
-      .toLowerCase();
+const exam =
+document.getElementById("examFilter")
+.value.toLowerCase();
 
 
-  const filtered =
-    appointmentsData.filter(item => {
+const filtered =
+appointmentsData.filter(item=>{
 
-      const patientName =
-        String(
-          item.name ||
-          item.patient_name ||
-          ""
-        ).toLowerCase();
+const name =
+String(
+item.name ||
+item.patient_name ||
+""
+).toLowerCase();
 
-      const phone =
-        String(item.phone || "")
-          .toLowerCase();
+const phone =
+String(item.phone || "").toLowerCase();
 
-      const itemExam =
-        String(
-          item.exam ||
-          item.exam_type ||
-          ""
-        ).toLowerCase();
+const itemExam =
+String(
+item.exam ||
+item.exam_type ||
+""
+).toLowerCase();
 
-      const itemDate =
-        String(
-          item.date ||
-          item.appointment_date ||
-          ""
-        );
+const itemDate =
+String(
+item.date ||
+item.appointment_date ||
+""
+);
 
-      const itemStatus =
-        item.status || "pending";
+const itemStatus =
+item.status || "pending";
 
+return(
 
-      const searchMatch =
-        !search ||
-        patientName.includes(search) ||
-        phone.includes(search);
+(!search ||
+name.includes(search) ||
+phone.includes(search))
 
-      const dateMatch =
-        !date ||
-        itemDate === date;
+&&
 
-      const examMatch =
-        !exam ||
-        itemExam.includes(exam);
+(!date || itemDate===date)
 
-      const statusMatch =
-        statusFilter === "all" ||
-        itemStatus === statusFilter;
+&&
 
+(!exam || itemExam.includes(exam))
 
-      return (
-        searchMatch &&
-        dateMatch &&
-        examMatch &&
-        statusMatch
-      );
+&&
 
-    });
+(statusFilter==="all" ||
+itemStatus===statusFilter)
 
+);
 
-  renderAppointments(filtered);
+});
+
+renderAppointments(filtered);
+
 }
 
 
 function showToday(){
 
-  const today =
-    new Date();
+const today=new Date();
 
-  const year =
-    today.getFullYear();
+const y=today.getFullYear();
 
-  const month =
-    String(today.getMonth()+1)
-      .padStart(2,"0");
+const m=String(
+today.getMonth()+1
+).padStart(2,"0");
 
-  const day =
-    String(today.getDate())
-      .padStart(2,"0");
+const d=String(
+today.getDate()
+).padStart(2,"0");
 
-  document.getElementById("dateFilter").value =
-    `${year}-${month}-${day}`;
+document.getElementById("dateFilter").value =
+`${y}-${m}-${d}`;
 
-  applyFilters();
+applyFilters();
+
 }
 
 
 function resetFilters(){
 
-  document.getElementById("searchInput").value =
-    "";
+document.getElementById("searchInput").value="";
+document.getElementById("dateFilter").value="";
+document.getElementById("examFilter").value="";
 
-  document.getElementById("dateFilter").value =
-    "";
+statusFilter="all";
 
-  document.getElementById("examFilter").value =
-    "";
+applyFilters();
 
-  statusFilter = "all";
-
-  renderAppointments(
-    appointmentsData
-  );
 }
 
 
-/* ===============================
-   CHANGE STATUS
-================================ */
+/* STATUS */
 
 async function changeStatus(item){
 
-  const current =
-    item.status || "pending";
+const current =
+item.status || "pending";
 
-  let newStatus;
+let newStatus;
 
-  if(current === "pending")
-    newStatus = "completed";
+if(current==="pending")
+newStatus="completed";
 
-  else if(current === "completed")
-    newStatus = "cancelled";
+else if(current==="completed")
+newStatus="cancelled";
 
-  else
-    newStatus = "pending";
-
-
-  const { error } =
-    await client
-      .from("appointments")
-      .update({
-        status:newStatus
-      })
-      .eq("id",item.id);
+else
+newStatus="pending";
 
 
-  if(error){
-
-    alert(
-      "حدث خطأ أثناء تغيير الحالة: " +
-      error.message
-    );
-
-    return;
-  }
+const {error} =
+await client
+.from("appointments")
+.update({status:newStatus})
+.eq("id",item.id);
 
 
-  await loadAppointments();
+if(error){
+
+alert(
+"حدث خطأ أثناء تغيير الحالة: "+
+error.message
+);
+
+return;
+
+}
+
+await loadAppointments();
+
 }
 
 
-/* ===============================
-   EDIT
-================================ */
+/* EDIT */
 
 async function editAppointment(item){
 
-  const newName =
-    prompt(
-      "اسم المريض:",
-      item.name ||
-      item.patient_name ||
-      ""
-    );
+const name =
+prompt(
+"اسم المريض:",
+item.patient_name || item.name || ""
+);
 
-  if(newName === null)
-    return;
+if(name===null)return;
 
+const phone =
+prompt("رقم الهاتف:",item.phone || "");
 
-  const newPhone =
-    prompt(
-      "رقم الهاتف:",
-      item.phone || ""
-    );
+if(phone===null)return;
 
-  if(newPhone === null)
-    return;
+const exam =
+prompt(
+"نوع الفحص:",
+item.exam_type || item.exam || ""
+);
 
+if(exam===null)return;
 
-  const newExam =
-    prompt(
-      "نوع الفحص:",
-      item.exam ||
-      item.exam_type ||
-      ""
-    );
+const date =
+prompt(
+"تاريخ الموعد:",
+item.appointment_date || item.date || ""
+);
 
-  if(newExam === null)
-    return;
+if(date===null)return;
 
+const time =
+prompt(
+"وقت الموعد:",
+item.appointment_time || item.time || ""
+);
 
-  const newDate =
-    prompt(
-      "تاريخ الموعد:",
-      item.date ||
-      item.appointment_date ||
-      ""
-    );
-
-  if(newDate === null)
-    return;
+if(time===null)return;
 
 
-  const newTime =
-    prompt(
-      "وقت الموعد:",
-      item.time ||
-      item.appointment_time ||
-      ""
-    );
+const {error} =
+await client
+.from("appointments")
+.update({
 
-  if(newTime === null)
-    return;
+patient_name:name,
+phone,
+exam_type:exam,
+appointment_date:date,
+appointment_time:time
 
-
-  const { error } =
-    await client
-      .from("appointments")
-      .update({
-        patient_name:newName,
-        phone:newPhone,
-        exam_type:newExam,
-        appointment_date:newDate,
-        appointment_time:newTime
-      })
-      .eq("id",item.id);
+})
+.eq("id",item.id);
 
 
-  if(error){
+if(error){
 
-    alert(
-      "حدث خطأ أثناء التعديل: " +
-      error.message
-    );
+alert(
+"حدث خطأ أثناء التعديل: "+
+error.message
+);
 
-    return;
-  }
+return;
 
+}
 
-  alert(
-    "تم تعديل بيانات الحجز بنجاح ✅"
-  );
+alert("تم تعديل الحجز بنجاح ✅");
 
-  await loadAppointments();
+await loadAppointments();
+
 }
 
 
-/* ===============================
-   DELETE
-================================ */
+/* DELETE */
 
 async function deleteAppointment(item){
 
-  const ok =
-    confirm(
-      "هل أنت متأكد من حذف هذا الحجز؟"
-    );
+if(!confirm("هل أنت متأكد من حذف هذا الحجز؟"))
+return;
 
-  if(!ok)
-    return;
+const {error} =
+await client
+.from("appointments")
+.delete()
+.eq("id",item.id);
 
+if(error){
 
-  const { error } =
-    await client
-      .from("appointments")
-      .delete()
-      .eq("id",item.id);
+alert(
+"حدث خطأ أثناء الحذف: "+
+error.message
+);
 
+return;
 
-  if(error){
+}
 
-    alert(
-      "حدث خطأ أثناء الحذف: " +
-      error.message
-    );
+await loadAppointments();
 
-    return;
-  }
-
-
-  alert(
-    "تم حذف الحجز بنجاح ✅"
-  );
-
-  await loadAppointments();
 }
 
 
-/* ===============================
-   PATIENT FILE
-================================ */
-let currentPatient = null;
+/* PATIENT PANEL */
 
-function openPatientPanel(item){
+async function openPatientPanel(item){
 
-  currentPatient = item;
+currentPatient=item;
 
-  const patientName =
-    item.name ||
-    item.patient_name ||
-    "-";
+const name =
+item.patient_name || item.name || "-";
 
-  const phone =
-    item.phone || "-";
+const phone=item.phone || "-";
 
-  const exam =
-    item.exam ||
-    item.exam_type ||
-    "-";
+const exam =
+item.exam_type || item.exam || "-";
 
-  const date =
-    item.date ||
-    item.appointment_date ||
-    "-";
+const date =
+item.appointment_date || item.date || "-";
 
-  const time =
-    item.time ||
-    item.appointment_time ||
-    "-";
+const time =
+item.appointment_time || item.time || "-";
 
 
-  document.getElementById(
-    "patientDetails"
-  ).innerHTML = `
+const details =
+document.getElementById("patientDetails");
 
-    <div class="patient-info">
+details.innerHTML=`
 
-      <div class="info-item">
-        <strong>👤 اسم المريض</strong>
-        <br>${escapeHtml(patientName)}
-      </div>
+<div class="patient-info">
 
-      <div class="info-item">
-        <strong>📞 رقم الهاتف</strong>
-        <br>${escapeHtml(phone)}
-      </div>
+<div class="info-item">
+<strong>👤 اسم المريض</strong><br>
+${escapeHtml(name)}
+</div>
 
-      <div class="info-item">
-        <strong>🩻 نوع الفحص</strong>
-        <br>${escapeHtml(exam)}
-      </div>
+<div class="info-item">
+<strong>📞 رقم الهاتف</strong><br>
+${escapeHtml(phone)}
+</div>
 
-      <div class="info-item">
-        <strong>📅 الموعد</strong>
-        <br>${escapeHtml(date)}
-        &nbsp;
-        ${escapeHtml(time)}
-      </div>
+<div class="info-item">
+<strong>🩻 نوع الفحص</strong><br>
+${escapeHtml(exam)}
+</div>
 
-    </div>
+<div class="info-item">
+<strong>📅 الموعد</strong><br>
+${escapeHtml(date)} ${escapeHtml(time)}
+</div>
 
-  `;
+</div>
 
-if (item.request_image_path) {
+`;
 
-  const requestBox = document.createElement("div");
-  requestBox.style.cssText =
-    "margin-top:15px;text-align:center;padding:15px;border:1px dashed #ccc;border-radius:12px;";
 
-  requestBox.innerHTML = `
-    <strong>📷 صورة طلب الفحص المرسلة من المريض</strong>
-    <br><br>
-    <span>جاري تحميل الصورة...</span>
-  `;
+if(item.request_image_path){
 
-  document
-    .getElementById("patientDetails")
-    .insertAdjacentElement("beforeend", requestBox);
+const box=document.createElement("div");
 
-  const { data, error } = await client.storage
-    .from("radiology-files")
-    .createSignedUrl(item.request_image_path, 600);
+box.className="upload-box";
 
-  if (error) {
+box.innerHTML =
+"📷 جاري تحميل صورة طلب الفحص...";
 
-    console.error("Request image error:", error);
+details.appendChild(box);
 
-    requestBox.innerHTML = `
-      <strong>📷 صورة طلب الفحص</strong>
-      <br><br>
-      <span style="color:red;">
-        تعذر فتح الصورة: ${escapeHtml(error.message)}
-      </span>
-    `;
 
-  } else if (data && data.signedUrl) {
+const {data,error} =
+await client.storage
+.from("radiology-files")
+.createSignedUrl(
+item.request_image_path,
+600
+);
 
-    requestBox.innerHTML = `
-      <strong>📷 صورة طلب الفحص المرسلة من المريض</strong>
-      <br><br>
 
-      <a href="${data.signedUrl}"
-         target="_blank"
-         rel="noopener">
+if(error){
 
-        <img
-          src="${data.signedUrl}"
-          alt="صورة طلب الفحص"
-          style="
-            display:block;
-            width:100%;
-            max-width:500px;
-            max-height:500px;
-            object-fit:contain;
-            margin:10px auto;
-            border-radius:12px;
-            border:1px solid #ddd;
-          "
-        >
+box.innerHTML =
+`تعذر فتح صورة الطلب: ${escapeHtml(error.message)}`;
 
-      </a>
+}else if(data?.signedUrl){
 
-      <br>
+box.innerHTML=`
 
-      <a href="${data.signedUrl}"
-         target="_blank"
-         rel="noopener"
-         style="
-           display:inline-block;
-           padding:10px 20px;
-           background:#0b8ca8;
-           color:white;
-           text-decoration:none;
-           border-radius:8px;
-         ">
-         🔍 فتح الصورة بالحجم الكامل
-      </a>
-    `;
+<strong>📷 صورة طلب الفحص</strong>
 
-  } else {
+<br><br>
 
-    requestBox.innerHTML = `
-      <strong>📷 صورة طلب الفحص</strong>
-      <br><br>
-      <span style="color:red;">
-        لم يتم إنشاء رابط للصورة
-      </span>
-    `;
-  }
+<a
+href="${data.signedUrl}"
+target="_blank"
+rel="noopener">
+
+<img
+src="${data.signedUrl}"
+style="
+max-width:100%;
+max-height:500px;
+border-radius:12px;
+">
+
+</a>
+
+`;
+
 }
+
 }
-  document.getElementById(
-    "patientPanel"
-  ).style.display =
-    "block";
+
+
+document.getElementById("patientPanel").style.display =
+"block";
+
 }
+
+
+function closePatientPanel(){
+
+document.getElementById("patientPanel").style.display =
+"none";
+
+}
+
+
+/* UPLOAD RESULTS */
 
 async function uploadRadiologyFile(){
 
-  const input = document.getElementById("radiologyFile");
-  const message = document.getElementById("uploadMessage");
+const input =
+document.getElementById("radiologyFile");
 
-  if(!currentPatient){
-    message.textContent = "لم يتم تحديد المريض.";
-    return;
-  }
+const message =
+document.getElementById("uploadMessage");
 
-  if(!input.files || input.files.length === 0){
-    message.textContent = "يرجى اختيار ملف أولاً.";
-    return;
-  }
+if(!currentPatient){
 
-  const file = input.files[0];
+message.textContent =
+"لم يتم تحديد المريض.";
 
-  message.textContent = "جاري رفع الملف... ⏳";
+return;
 
-  try {
-
-    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-
-    // تحديد نوع الملف
-    const isPDF =
-      file.type === "application/pdf" ||
-      file.name.toLowerCase().endsWith(".pdf");
-
-    let filePath;
-
-    if(isPDF){
-
-      // التقرير
-      filePath =
-        `reports/${currentPatient.id}/${Date.now()}_${safeName}`;
-
-    } else {
-
-      // ملف / صورة الفحص
-      filePath =
-        `exam-results/${currentPatient.id}/${Date.now()}_${safeName}`;
-
-    }
-
-    // رفع الملف إلى Storage
-    const { error: uploadError } =
-      await client.storage
-        .from("radiology-files")
-        .upload(filePath, file, {
-          upsert: false
-        });
-
-    if(uploadError){
-      console.error(uploadError);
-
-      message.textContent =
-        "فشل رفع الملف: " + uploadError.message;
-
-      return;
-    }
-
-
-    // حفظ المسار داخل جدول appointments
-
-    const updateData = {};
-
-    if(isPDF){
-
-      updateData.report_file_path = filePath;
-
-    } else {
-
-      updateData.exam_file_path = filePath;
-
-    }
-
-
-    const { error: updateError } =
-      await client
-        .from("appointments")
-        .update(updateData)
-        .eq("id", currentPatient.id);
-
-
-    if(updateError){
-
-      console.error(updateError);
-
-      message.textContent =
-        "تم رفع الملف ولكن حدث خطأ بحفظه: " +
-        updateError.message;
-
-      return;
-    }
-
-
-    // تحديث بيانات المريض الحالية
-    if(isPDF){
-
-      currentPatient.report_file_path = filePath;
-
-      message.textContent =
-        "تم رفع التقرير وحفظه بنجاح ✅";
-
-    } else {
-
-      currentPatient.exam_file_path = filePath;
-
-      message.textContent =
-        "تم رفع ملف الفحص وحفظه بنجاح ✅";
-
-    }
-
-
-    input.value = "";
-
-    // فحص هل أصبح لدينا الفحص + التقرير
-    if(
-      currentPatient.exam_file_path &&
-      currentPatient.report_file_path
-    ){
-
-      const publish =
-        confirm(
-          "تم رفع ملف الفحص والتقرير ✅\n\nهل تريد نشر النتائج للمريض الآن؟"
-        );
-
-      if(publish){
-
-        const { error: publishError } =
-          await client
-            .from("appointments")
-            .update({
-              results_ready: true,
-              views_remaining: 5
-            })
-            .eq("id", currentPatient.id);
-
-
-        if(publishError){
-
-          console.error(publishError);
-
-          message.textContent =
-            "تم رفع الملفات، لكن فشل نشر النتائج: " +
-            publishError.message;
-
-          return;
-        }
-
-
-        currentPatient.results_ready = true;
-        currentPatient.views_remaining = 5;
-
-        message.textContent =
-          "تم نشر النتائج للمريض بنجاح ✅ — يمكنه الآن الدخول برقم الهاتف.";
-
-      }
-    }
-
-
-    await loadAppointments();
-
-  } catch(error){
-
-    console.error(error);
-
-    message.textContent =
-      "حدث خطأ غير متوقع أثناء رفع الملف.";
-
-  }
 }
 
-  
-function closePatientPanel(){
+if(!input.files?.length){
 
-  document.getElementById(
-    "patientPanel"
-  ).style.display =
-    "none";
+message.textContent =
+"يرجى اختيار ملف أولاً.";
+
+return;
+
 }
 
 
-/* ===============================
-   SECURITY HELPER
-================================ */
+const file=input.files[0];
+
+message.textContent =
+"جاري رفع الملف... ⏳";
+
+
+const safeName =
+file.name.replace(
+/[^a-zA-Z0-9._-]/g,
+"_"
+);
+
+
+const isPDF =
+file.type==="application/pdf" ||
+file.name.toLowerCase().endsWith(".pdf");
+
+
+const filePath =
+isPDF
+
+? `reports/${currentPatient.id}/${Date.now()}_${safeName}`
+
+: `exam-results/${currentPatient.id}/${Date.now()}_${safeName}`;
+
+
+const {error:uploadError} =
+await client.storage
+.from("radiology-files")
+.upload(
+filePath,
+file,
+{upsert:false}
+);
+
+
+if(uploadError){
+
+message.textContent =
+"فشل رفع الملف: "+
+uploadError.message;
+
+return;
+
+}
+
+
+const updateData =
+isPDF
+
+? {report_file_path:filePath}
+
+: {exam_file_path:filePath};
+
+
+const {error:updateError} =
+await client
+.from("appointments")
+.update(updateData)
+.eq("id",currentPatient.id);
+
+
+if(updateError){
+
+message.textContent =
+"تم رفع الملف ولكن تعذر حفظ المسار: "+
+updateError.message;
+
+return;
+
+}
+
+
+if(isPDF){
+
+currentPatient.report_file_path=filePath;
+
+message.textContent =
+"تم رفع التقرير بنجاح ✅";
+
+}else{
+
+currentPatient.exam_file_path=filePath;
+
+message.textContent =
+"تم رفع ملف الفحص بنجاح ✅";
+
+}
+
+
+input.value="";
+
+
+if(
+currentPatient.exam_file_path &&
+currentPatient.report_file_path
+){
+
+const publish =
+confirm(
+"تم رفع ملف الفحص والتقرير ✅\n\nهل تريد نشر النتائج للمريض الآن؟"
+);
+
+if(publish){
+
+const {error} =
+await client
+.from("appointments")
+.update({
+
+results_ready:true,
+views_remaining:5
+
+})
+.eq("id",currentPatient.id);
+
+
+if(error){
+
+message.textContent =
+"فشل نشر النتائج: "+
+error.message;
+
+return;
+
+}
+
+
+currentPatient.results_ready=true;
+currentPatient.views_remaining=5;
+
+message.textContent =
+"تم نشر النتائج للمريض بنجاح ✅";
+
+}
+
+}
+
+await loadAppointments();
+
+}
+
+
+/* REALTIME */
+
+function startRealtime(){
+
+if(realtimeChannel)
+client.removeChannel(realtimeChannel);
+
+realtimeChannel =
+client
+.channel("appointments-live")
+.on(
+
+"postgres_changes",
+
+{
+event:"*",
+schema:"public",
+table:"appointments"
+},
+
+()=>loadAppointments()
+
+)
+.subscribe();
+
+}
+
+
+/* SECURITY */
 
 function escapeHtml(value){
 
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
+return String(value)
 
-  function startRealtime(){
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
 
-  if(realtimeChannel){
-    client.removeChannel(realtimeChannel);
-  }
-
-  realtimeChannel = client
-    .channel("appointments-live")
-    .on(
-      "postgres_changes",
-      {
-        event: "*",
-        schema: "public",
-        table: "appointments"
-      },
-      () => {
-        loadAppointments();
-      }
-    )
-    .subscribe();
 }
 
 
-/* ===============================
-   SESSION
-================================ */
+/* SESSION */
 
 async function checkSession(){
 
-  const {
-    data:{session}
-  } =
-    await client.auth.getSession();
+const {
+data:{session}
+} =
+await client.auth.getSession();
 
+const recovery =
+window.location.hash.includes("type=recovery") ||
+window.location.search.includes("type=recovery");
 
-  if(session)
-    showDashboard();
+if(session && !recovery)
+showDashboard();
+
 }
-
 
 checkSession();
 
