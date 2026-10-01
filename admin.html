@@ -1487,7 +1487,25 @@ function openPatientPanel(item){
 
   `;
 
-
+if (item.request_image_path) {
+  client.storage
+    .from("radiology-files")
+    .createSignedUrl(item.request_image_path, 600)
+    .then(({ data, error }) => {
+      if (!error && data?.signedUrl) {
+        document.getElementById("patientDetails").insertAdjacentHTML(
+          "beforeend",
+          `<div style="margin-top:15px;text-align:center;">
+            <strong>📎 صورة طلب الفحص المرفوعة من المريض</strong><br><br>
+            <a href="${data.signedUrl}" target="_blank" rel="noopener">
+              <img src="${data.signedUrl}"
+                   style="max-width:100%;max-height:350px;border-radius:10px;border:1px solid #ddd;">
+            </a>
+          </div>`
+        );
+      }
+    });
+}
   document.getElementById(
     "patientPanel"
   ).style.display =
