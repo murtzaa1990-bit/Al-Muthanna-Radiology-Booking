@@ -1490,23 +1490,92 @@ function openPatientPanel(item){
   `;
 
 if (item.request_image_path) {
-  client.storage
+
+  const requestBox = document.createElement("div");
+  requestBox.style.cssText =
+    "margin-top:15px;text-align:center;padding:15px;border:1px dashed #ccc;border-radius:12px;";
+
+  requestBox.innerHTML = `
+    <strong>📷 صورة طلب الفحص المرسلة من المريض</strong>
+    <br><br>
+    <span>جاري تحميل الصورة...</span>
+  `;
+
+  document
+    .getElementById("patientDetails")
+    .insertAdjacentElement("beforeend", requestBox);
+
+  const { data, error } = await client.storage
     .from("radiology-files")
-    .createSignedUrl(item.request_image_path, 600)
-    .then(({ data, error }) => {
-      if (!error && data?.signedUrl) {
-        document.getElementById("patientDetails").insertAdjacentHTML(
-          "beforeend",
-          `<div style="margin-top:15px;text-align:center;">
-            <strong>📎 صورة طلب الفحص المرفوعة من المريض</strong><br><br>
-            <a href="${data.signedUrl}" target="_blank" rel="noopener">
-              <img src="${data.signedUrl}"
-                   style="max-width:100%;max-height:350px;border-radius:10px;border:1px solid #ddd;">
-            </a>
-          </div>`
-        );
-      }
-    });
+    .createSignedUrl(item.request_image_path, 600);
+
+  if (error) {
+
+    console.error("Request image error:", error);
+
+    requestBox.innerHTML = `
+      <strong>📷 صورة طلب الفحص</strong>
+      <br><br>
+      <span style="color:red;">
+        تعذر فتح الصورة: ${escapeHtml(error.message)}
+      </span>
+    `;
+
+  } else if (data && data.signedUrl) {
+
+    requestBox.innerHTML = `
+      <strong>📷 صورة طلب الفحص المرسلة من المريض</strong>
+      <br><br>
+
+      <a href="${data.signedUrl}"
+         target="_blank"
+         rel="noopener">
+
+        <img
+          src="${data.signedUrl}"
+          alt="صورة طلب الفحص"
+          style="
+            display:block;
+            width:100%;
+            max-width:500px;
+            max-height:500px;
+            object-fit:contain;
+            margin:10px auto;
+            border-radius:12px;
+            border:1px solid #ddd;
+          "
+        >
+
+      </a>
+
+      <br>
+
+      <a href="${data.signedUrl}"
+         target="_blank"
+         rel="noopener"
+         style="
+           display:inline-block;
+           padding:10px 20px;
+           background:#0b8ca8;
+           color:white;
+           text-decoration:none;
+           border-radius:8px;
+         ">
+         🔍 فتح الصورة بالحجم الكامل
+      </a>
+    `;
+
+  } else {
+
+    requestBox.innerHTML = `
+      <strong>📷 صورة طلب الفحص</strong>
+      <br><br>
+      <span style="color:red;">
+        لم يتم إنشاء رابط للصورة
+      </span>
+    `;
+  }
+}
 }
   document.getElementById(
     "patientPanel"
