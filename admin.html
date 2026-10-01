@@ -1533,6 +1533,176 @@ async function uploadRadiologyFile(){
 
   message.textContent = "جاري رفع الملف... ⏳";
 
+  try {
+
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+
+    // تحديد نوع الملف
+    const isPDF =
+      file.type === "application/pdf" ||
+      file.name.toLowerCase().endsWith(".pdf");
+
+    let filePath;
+
+    if(isPDF){
+
+      // التقرير
+      filePath =
+        `reports/${currentPatient.id}/${Date.now()}_${safeName}`;
+
+    } else {
+
+      // ملف / صورة الفحص
+      filePath =
+        `exam-results/${currentPatient.id}/${Date.now()}_${safeName}`;
+
+    }
+
+    // رفع الملف إلى Storage
+    const { error: uploadError } =
+      await client.storage
+        .from("radiology-files")
+        .upload(filePath, file, {
+          upsert: false
+        });
+
+    if(uploadError){
+      console.error(uploadError);
+
+      message.textContent =
+        "فشل رفع الملف: " + uploadError.message;
+
+      return;
+    }
+
+
+    // حفظ المسار داخل جدول appointments
+
+    const updateData = {};
+
+    if(isPDF){
+
+      updateData.report_file_path = filePath;
+
+    } else {
+
+      updateData.exam_file_path = filePath;
+
+    }
+
+
+    const { error: updateError } =
+      await client
+        .from("appointments")
+        .update(updateData)
+        .eq("id", currentPatient.id);
+
+
+    if(updateError){
+
+      console.error(updateError);
+
+      message.textContent =
+        "تم رفع الملف ولكن حدث خطأ بحفظه: " +
+        updateError.message;
+
+      return;
+    }
+
+
+    // تحديث بيانات المريض الحالية
+    if(isPDF){
+
+      currentPatient.report_file_path = filePath;
+
+      message.textContent =
+        "تم رفع التقرير وحفظه بنجاح ✅";
+
+    } else {
+
+      currentPatient.exam_file_path = filePath;
+
+      message.textContent =
+        "تم رفع ملف الفحص وحفظه بنجاح ✅";
+
+    }
+
+
+    input.value = "";
+
+    // فحص هل أصبح لدينا الفحص + التقرير
+    if(
+      currentPatient.exam_file_path &&
+      currentPatient.report_file_path
+    ){
+
+      const publish =
+        confirm(
+          "تم رفع ملف الفحص والتقرير ✅\n\nهل تريد نشر النتائج للمريض الآن؟"
+        );
+
+      if(publish){
+
+        const { error: publishError } =
+          await client
+            .from("appointments")
+            .update({
+              results_ready: true,
+              views_remaining: 5
+            })
+            .eq("id", currentPatient.id);
+
+
+        if(publishError){
+
+          console.error(publishError);
+
+          message.textContent =
+            "تم رفع الملفات، لكن فشل نشر النتائج: " +
+            publishError.message;
+
+          return;
+        }
+
+
+        currentPatient.results_ready = true;
+        currentPatient.views_remaining = 5;
+
+        message.textContent =
+          "تم نشر النتائج للمريض بنجاح ✅ — يمكنه الآن الدخول برقم الهاتف.";
+
+      }
+    }
+
+
+    await loadAppointments();
+
+  } catch(error){
+
+    console.error(error);
+
+    message.textContent =
+      "حدث خطأ غير متوقع أثناء رفع الملف.";
+
+  }
+}
+  const input = document.getElementById("radiologyFile");
+  const message = document.getElementById("uploadMessage");
+
+  if(!currentPatient){
+    message.textContent = "لم يتم تحديد المريض.";
+    return;
+  }
+
+  if(!input.files || input.files.length === 0){
+    message.textContent = "يرجى اختيار ملف أولاً.";
+    return;
+  }
+
+  const file = input.files[0];
+
+  message.textContent = "جاري رفع الملف... ⏳";
+
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
 
   const filePath =
