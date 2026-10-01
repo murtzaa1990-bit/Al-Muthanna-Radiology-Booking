@@ -1686,43 +1686,7 @@ async function uploadRadiologyFile(){
 
   }
 }
-  const input = document.getElementById("radiologyFile");
-  const message = document.getElementById("uploadMessage");
-
-  if(!currentPatient){
-    message.textContent = "لم يتم تحديد المريض.";
-    return;
-  }
-
-  if(!input.files || input.files.length === 0){
-    message.textContent = "يرجى اختيار ملف أولاً.";
-    return;
-  }
-
-  const file = input.files[0];
-
-  message.textContent = "جاري رفع الملف... ⏳";
-
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-
-  const filePath =
-    `${currentPatient.id}/${Date.now()}_${safeName}`;
-
-  const { error } = await client.storage
-    .from("radiology-files")
-    .upload(filePath, file, {
-      upsert: false
-    });
-
-  if(error){
-    console.error(error);
-    message.textContent =
-      "فشل رفع الملف: " + error.message;
-    return;
-  }
-
-  message.textContent = "تم رفع ملف الفحص بنجاح ✅";
-  input.value = "";
+ 
 }
 function closePatientPanel(){
 
