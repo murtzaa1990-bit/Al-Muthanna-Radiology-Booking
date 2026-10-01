@@ -1488,51 +1488,48 @@ message.textContent =
 input.value="";
 
 
+// نشر النتيجة إذا موجود ملف فحص أو تقرير
 if(
-currentPatient.exam_file_path &&
-currentPatient.report_file_path
+  currentPatient.exam_file_path ||
+  currentPatient.report_file_path
 ){
 
-const publish =
-confirm(
-"تم رفع ملف الفحص والتقرير ✅\n\nهل تريد نشر النتائج للمريض الآن؟"
-);
+  const publish = confirm(
+    "تم رفع الملف بنجاح ✅\n\nهل تريد نشر النتيجة للمريض الآن؟"
+  );
 
-if(publish){
+  if(publish){
 
-const {error} =
-await client
-.from("appointments")
-.update({
+    const { error: publishError } =
+      await client
+        .from("appointments")
+        .update({
+          results_ready: true,
+          views_remaining: 5
+        })
+        .eq("id", currentPatient.id);
 
-results_ready:true,
-views_remaining:5
+    if(publishError){
 
-})
-.eq("id",currentPatient.id);
+      console.error(publishError);
 
+      message.textContent =
+        "تم رفع الملف، لكن فشل نشر النتيجة: " +
+        publishError.message;
 
-if(error){
+      return;
+    }
 
-message.textContent =
-"فشل نشر النتائج: "+
-error.message;
+    currentPatient.results_ready = true;
+    currentPatient.views_remaining = 5;
 
-return;
+    message.textContent =
+      "تم نشر النتيجة للمريض بنجاح ✅ يمكنه الآن عرضها برقم الهاتف.";
 
+  }
 }
 
-
-currentPatient.results_ready=true;
-currentPatient.views_remaining=5;
-
-message.textContent =
-"تم نشر النتائج للمريض بنجاح ✅";
-
-}
-
-}
-
+await loadAppointments();
 await loadAppointments();
 
 }
