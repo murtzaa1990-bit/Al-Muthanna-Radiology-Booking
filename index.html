@@ -422,7 +422,7 @@
 
   <!-- نتائج المريض -->
 
-  <section class="card">
+  <section class="card" id="resultsSection">
 
     <h3>🩻 نتائج الفحص</h3>
 
@@ -868,6 +868,18 @@ const resultsPhone =
 
 if (phoneFromQR) {
   resultsPhone.value = phoneFromQR;
+
+  setTimeout(() => {
+    const resultsSection =
+      document.getElementById("resultsSection");
+
+    if (resultsSection) {
+      resultsSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  }, 300);
 }
 
 const resultsMessage =
