@@ -350,6 +350,7 @@ td{
   .patient-info{grid-template-columns:1fr}
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
@@ -602,7 +603,10 @@ onclick="uploadRadiologyFile()">
 id="uploadMessage"
 style="margin-top:15px;font-weight:bold">
 </div>
-
+<div id="qrResultBox" style="display:none;margin-top:18px;text-align:center;">
+  <h3>📱 QR Code لنتيجة المريض</h3>
+  <div id="qrResult"></div>
+</div>
 </div>
 
 </div>
@@ -1351,7 +1355,23 @@ border-radius:12px;
 
 }
 
+const qrBox = document.getElementById("qrResultBox");
+const qrResult = document.getElementById("qrResult");
 
+qrResult.innerHTML = "";
+
+const resultUrl =
+  window.location.origin +
+  window.location.pathname.replace("admin.html", "index.html") +
+  "?phone=" + encodeURIComponent(phone);
+
+new QRCode(qrResult, {
+  text: resultUrl,
+  width: 200,
+  height: 200
+});
+
+qrBox.style.display = "block";
 document.getElementById("patientPanel").style.display =
 "block";
 
