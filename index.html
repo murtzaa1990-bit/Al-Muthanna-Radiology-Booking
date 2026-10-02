@@ -863,6 +863,12 @@ const resultsPhone =
   document.getElementById(
     "results_phone"
   );
+  const phoneFromQR =
+  new URLSearchParams(window.location.search).get("phone");
+
+if (phoneFromQR) {
+  resultsPhone.value = phoneFromQR;
+}
 
 const resultsMessage =
   document.getElementById(
@@ -1097,11 +1103,13 @@ resultsButton.addEventListener(
     }
 
   }
-);
+});
 
+if (phoneFromQR) {
+  resultsButton.click();
+}
 
 function showResultsError(text) {
-
   resultsMessage.className =
     "message error";
 
