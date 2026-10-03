@@ -137,7 +137,6 @@ const SUPABASE_KEY =
 
 
 async function doctorLogin() {
-
   const doctorName =
     document.getElementById("doctorName").value.trim();
 
@@ -147,104 +146,68 @@ async function doctorLogin() {
   const message =
     document.getElementById("message");
 
-
   if (!doctorName || !doctorPassword) {
-
     message.style.color = "red";
     message.textContent =
       "يرجى إدخال اسم الطبيب والرمز السري";
-
     return;
   }
-
 
   message.style.color = "#555";
   message.textContent = "جاري التحقق...";
 
-
   try {
-
     const response = await fetch(
-      SUPABASE_URL +
-      "/rest/v1/doctors?name=eq." +
-      encodeURIComponent(doctorName) +
-      "&select=*",
+      SUPABASE_URL + "/rest/v1/rpc/doctor_login",
       {
+        method: "POST",
         headers: {
           "apikey": SUPABASE_KEY,
-          "Authorization":
-            "Bearer " + SUPABASE_KEY
-        }
+          "Authorization": "Bearer " + SUPABASE_KEY,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          p_name: doctorName,
+          p_password: doctorPassword
+        })
       }
     );
 
+    const data = await response.json();
 
-    const doctors = await response.json();
-
-
-    if (
-      !response.ok ||
-      !Array.isArray(doctors) ||
-      doctors.length === 0
-    ) {
-
+    if (!response.ok || !data.success) {
       message.style.color = "red";
       message.textContent =
-        "اسم الطبيب غير موجود";
-
+        "اسم الطبيب أو الرمز السري غير صحيح";
       return;
     }
-
-
-    const doctor = doctors[0];
-
-
-    if (doctor.password !== doctorPassword) {
-
-      message.style.color = "red";
-      message.textContent =
-        "الرمز السري غير صحيح";
-
-      return;
-    }
-
 
     sessionStorage.setItem(
       "doctor_id",
-      doctor.id
+      data.doctor_id
     );
 
     sessionStorage.setItem(
       "doctor_name",
-      doctor.name
+      data.doctor_name
     );
 
-
     message.style.color = "green";
-    message.textContent =
-      "تم تسجيل الدخول بنجاح";
-
+    message.textContent = "تم تسجيل الدخول بنجاح";
 
     setTimeout(function () {
-
       window.location.href =
         "doctor-dashboard.html";
-
     }, 700);
 
-
   } catch (error) {
-
     console.error(error);
 
     message.style.color = "red";
     message.textContent =
       "حدث خطأ في الاتصال";
-
   }
-
 }
-
 </script>
 
 </body>
