@@ -309,7 +309,7 @@ function renderExams() {
       buttons += `
         <a
           class="file-btn"
-          href="${exam.exam_file_path}"
+          href="${SUPABASE_URL}/storage/v1/object/public/radiology-files/${exam.exam_file_path}"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -325,7 +325,7 @@ function renderExams() {
       buttons += `
         <a
           class="file-btn"
-          href="${exam.report_file_path}"
+          href="${SUPABASE_URL}/storage/v1/object/public/radiology-files/${exam.report_file_path}"
           target="_blank"
           rel="noopener noreferrer"
         >
