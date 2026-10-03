@@ -823,13 +823,17 @@ bookingForm.addEventListener(
         "رمز الحجز: <strong>" +
         bookingCode +
         "</strong>";
-if (window.sendBookingNotification) {
-  window.sendBookingNotification(
-    appointmentData.patient_name,
-    appointmentData.exam_type,
-    appointmentData.appointment_date,
-    appointmentData.appointment_time
-  );
+try {
+  if (window.sendBookingNotification) {
+    window.sendBookingNotification(
+      appointmentData.patient_name,
+      appointmentData.exam_type,
+      appointmentData.appointment_date,
+      appointmentData.appointment_time
+    );
+  }
+} catch (notificationError) {
+  console.error("Notification error:", notificationError);
 }
 
       bookingForm.reset();
