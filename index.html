@@ -1203,6 +1203,18 @@ await navigator.serviceWorker.ready;
       alert("تعذر تفعيل الإشعارات");
     }
   };
+      window.sendBookingNotification = function(patientName, examType, date, time) {
+  if (Notification.permission === "granted") {
+    new Notification("🔔 حجز جديد - قسم الأشعة والمفراس", {
+      body:
+        "المريض: " + patientName +
+        "\nالفحص: " + examType +
+        "\nالتاريخ: " + date +
+        "\nالوقت: " + time,
+      icon: "./hospital-logo.jpg.jpg"
+    });
+  }
+};
 </script>
 </script>
 </body>
