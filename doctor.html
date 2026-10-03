@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دخول الأطباء - مستشفى المثنى الأهلي</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f8fa;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      background: white;
+      width: 100%;
+      max-width: 420px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      text-align: center;
+    }
+
+    .logo {
+      width: 85px;
+      height: 85px;
+      object-fit: cover;
+      border-radius: 18px;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      margin: 5px 0;
+      color: #075b70;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      text-align: right;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #0787a3;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #066d84;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .back {
+      display: block;
+      margin-top: 20px;
+      color: #0787a3;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+
+    <img src="hospital-logo.jpg.jpg" class="logo" alt="شعار المستشفى">
+
+    <h2>مستشفى المثنى الأهلي</h2>
+
+    <div class="subtitle">
+      بوابة دخول الأطباء<br>
+      قسم الأشعة والمفراس
+    </div>
+
+    <input
+      type="text"
+      id="doctorName"
+      placeholder="اسم الطبيب"
+      autocomplete="off"
+    >
+
+    <input
+      type="password"
+      id="doctorPassword"
+      placeholder="الرمز السري"
+    >
+
+    <button type="button" onclick="doctorLogin()">
+      👨‍⚕️ دخول الطبيب
+    </button>
+
+    <div id="message"></div>
+
+    <a href="index.html" class="back">
+      العودة إلى المنصة
+    </a>
+
+  </div>
+
+<script>
+
+const SUPABASE_URL =
+  "https://kpxonagjclpmwwoczwog.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Svs8n3EuWTtMngtjw6MEnA_QU-dd0z8";
+
+
+async function doctorLogin() {
+
+  const doctorName =
+    document.getElementById("doctorName").value.trim();
+
+  const doctorPassword =
+    document.getElementById("doctorPassword").value.trim();
+
+  const message =
+    document.getElementById("message");
+
+
+  if (!doctorName || !doctorPassword) {
+
+    message.style.color = "red";
+    message.textContent =
+      "يرجى إدخال اسم الطبيب والرمز السري";
+
+    return;
+  }
+
+
+  message.style.color = "#555";
+  message.textContent = "جاري التحقق...";
+
+
+  try {
+
+    const response = await fetch(
+      SUPABASE_URL +
+      "/rest/v1/doctors?name=eq." +
+      encodeURIComponent(doctorName) +
+      "&select=*",
+      {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization":
+            "Bearer " + SUPABASE_KEY
+        }
+      }
+    );
+
+
+    const doctors = await response.json();
+
+
+    if (
+      !response.ok ||
+      !Array.isArray(doctors) ||
+      doctors.length === 0
+    ) {
+
+      message.style.color = "red";
+      message.textContent =
+        "اسم الطبيب غير موجود";
+
+      return;
+    }
+
+
+    const doctor = doctors[0];
+
+
+    if (doctor.password !== doctorPassword) {
+
+      message.style.color = "red";
+      message.textContent =
+        "الرمز السري غير صحيح";
+
+      return;
+    }
+
+
+    sessionStorage.setItem(
+      "doctor_id",
+      doctor.id
+    );
+
+    sessionStorage.setItem(
+      "doctor_name",
+      doctor.name
+    );
+
+
+    message.style.color = "green";
+    message.textContent =
+      "تم تسجيل الدخول بنجاح";
+
+
+    setTimeout(function () {
+
+      window.location.href =
+        "doctor-dashboard.html";
+
+    }, 700);
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    message.style.color = "red";
+    message.textContent =
+      "حدث خطأ في الاتصال";
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
