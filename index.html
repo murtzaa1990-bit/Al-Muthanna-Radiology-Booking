@@ -824,14 +824,23 @@ bookingForm.addEventListener(
         bookingCode +
         "</strong>";
 try {
-  if (window.sendBookingNotification) {
-    window.sendBookingNotification(
-      appointmentData.patient_name,
-      appointmentData.exam_type,
-      appointmentData.appointment_date,
-      appointmentData.appointment_time
-    );
-  }
+  await fetch(
+    SUPABASE_URL + "/functions/v1/send-booking-notification",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY
+      },
+      body: JSON.stringify({
+        patientName: appointmentData.patient_name,
+        examType: appointmentData.exam_type,
+        date: appointmentData.appointment_date,
+        time: appointmentData.appointment_time
+      })
+    }
+  );
 } catch (notificationError) {
   console.error("Notification error:", notificationError);
 }
