@@ -205,26 +205,23 @@ async function loadDoctorExams() {
 
   try {
 
-    const url =
-      SUPABASE_URL +
-      "/rest/v1/appointments" +
-      "?doctor_name=eq." +
-      encodeURIComponent(doctorName) +
-      "&select=id,patient_name,exam_type,appointment_date,exam_file_path,report_file_path" +
-      "&order=appointment_date.desc";
-
-
-    const response = await fetch(url, {
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization":
-          "Bearer " + SUPABASE_KEY
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/rpc/doctor_exams",
+      {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization":
+            "Bearer " + SUPABASE_KEY,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          p_doctor_name: doctorName
+        })
       }
-    });
-
+    );
 
     const data = await response.json();
-
 
     if (!response.ok) {
       console.error(data);
@@ -232,7 +229,6 @@ async function loadDoctorExams() {
         "تعذر تحميل الفحوصات";
       return;
     }
-
 
     doctorExams = data;
 
@@ -248,9 +244,6 @@ async function loadDoctorExams() {
   }
 
 }
-
-
-function renderExams() {
 
   const patientSearch =
     document.getElementById("patientSearch")
