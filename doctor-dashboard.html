@@ -307,14 +307,13 @@ function renderExams() {
     if (exam.exam_file_path) {
 
       buttons += `
-        <a
-          class="file-btn"
-          href="${SUPABASE_URL}/storage/v1/object/public/radiology-files/${exam.exam_file_path}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          🩻 مشاهدة الفحص
-        </a>
+        <button
+  class="file-btn"
+  type="button"
+  onclick="openDoctorFile(${exam.id}, 'exam')"
+>
+  🩻 مشاهدة الفحص
+</button>
       `;
 
     }
@@ -323,14 +322,13 @@ function renderExams() {
     if (exam.report_file_path) {
 
       buttons += `
-        <a
-          class="file-btn"
-          href="${SUPABASE_URL}/storage/v1/object/public/radiology-files/${exam.report_file_path}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          📄 مشاهدة التقرير
-        </a>
+        <button
+  class="file-btn"
+  type="button"
+  onclick="openDoctorFile(${exam.id}, 'report')"
+>
+  📄 مشاهدة التقرير
+</button>
       `;
 
     }
@@ -374,7 +372,42 @@ document
   .getElementById("dateSearch")
   .addEventListener("change", renderExams);
 
+async function openDoctorFile(appointmentId, fileType) {
 
+  try {
+
+    const response = await fetch(
+      SUPABASE_URL + "/functions/v1/doctor-file",
+      {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + SUPABASE_KEY,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          doctorName: doctorName,
+          appointmentId: appointmentId,
+          fileType: fileType
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.url) {
+      alert(data.error || "تعذر فتح الملف");
+      return;
+    }
+
+    window.open(data.url, "_blank");
+
+  } catch (error) {
+    console.error(error);
+    alert("حدث خطأ أثناء فتح الملف");
+  }
+
+}
 function logoutDoctor() {
 
   sessionStorage.removeItem("doctor_id");
