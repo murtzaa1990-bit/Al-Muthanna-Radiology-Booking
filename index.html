@@ -1162,6 +1162,39 @@ function showResultsError(text) {
 </script>
   <script>
   const VAPID_KEY = "BAY7DDIirulg2MYkY4FWw8MogKfsU3B-meaoggnfaRBCr3AgddXokIrlbx7M8SMO7fNNCb-uT_5SYMDMNssuunk";
+    </script>
+    <script type="module">
+  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-messaging.js";
+
+  const messaging = getMessaging();
+
+  window.enableBookingNotifications = async function () {
+    try {
+      const permission = await Notification.requestPermission();
+
+      if (permission !== "granted") {
+        alert("لم يتم السماح بالإشعارات");
+        return;
+      }
+
+      const registration = await navigator.serviceWorker.register(
+        "./firebase-messaging-sw.js"
+      );
+
+      const token = await getToken(messaging, {
+        vapidKey: VAPID_KEY,
+        serviceWorkerRegistration: registration
+      });
+
+      console.log("FCM TOKEN:", token);
+      alert("تم تفعيل إشعارات الحجوزات بنجاح ✅");
+
+    } catch (error) {
+      console.error("Notification error:", error);
+      alert("تعذر تفعيل الإشعارات");
+    }
+  };
+</script>
 </script>
 </body>
 </html>
