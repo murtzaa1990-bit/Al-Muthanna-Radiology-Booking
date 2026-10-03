@@ -1691,6 +1691,7 @@ if(
         .from("appointments")
         .update({
           results_ready: true,
+          status: "completed",
           views_remaining: 5
         })
         .eq("id", currentPatient.id);
