@@ -587,7 +587,29 @@ onclick="closePatientPanel()">
 <p>
 ارفع صورة الفحص أو تقرير PDF
 </p>
+<div style="margin-bottom:15px;">
+  <label for="doctorName" style="display:block;margin-bottom:6px;font-weight:bold;">
+    👨‍⚕️ الطبيب المُرسل
+  </label>
 
+  <select id="doctorName" style="width:100%;padding:10px;">
+    <option value="">-- اختر اسم الطبيب --</option>
+  </select>
+  <div style="display:flex;gap:8px;margin-top:10px;">
+  <input
+    type="text"
+    id="newDoctorName"
+    placeholder="اكتب اسم الطبيب الجديد"
+    style="flex:1;padding:10px;"
+  >
+
+  <button
+    type="button"
+    onclick="addDoctor()">
+    ➕ إضافة طبيب
+  </button>
+</div>
+</div>
 <input
 type="file"
 id="radiologyFile"
@@ -636,6 +658,58 @@ SUPABASE_URL,
 SUPABASE_KEY
 );
 
+
+  async function loadDoctors() {
+  const doctorSelect = document.getElementById("doctorName");
+
+  const { data, error } = await client
+    .from("doctors")
+    .select("id, name")
+    .order("name", { ascending: true });
+
+  if (error) {
+    console.error("خطأ تحميل الأطباء:", error);
+    return;
+  }
+
+  doctorSelect.innerHTML =
+    '<option value="">-- اختر اسم الطبيب --</option>';
+
+  data.forEach((doctor) => {
+    const option = document.createElement("option");
+    option.value = doctor.name;
+    option.textContent = doctor.name;
+    doctorSelect.appendChild(option);
+  });
+}
+
+async function addDoctor() {
+  const input = document.getElementById("newDoctorName");
+  const name = input.value.trim();
+
+  if (!name) {
+    alert("اكتب اسم الطبيب أولاً");
+    return;
+  }
+
+  const { error } = await client
+    .from("doctors")
+    .insert([{ name: name }]);
+
+  if (error) {
+    alert("تعذر إضافة الطبيب");
+    console.error(error);
+    return;
+  }
+
+  input.value = "";
+  await loadDoctors();
+
+  document.getElementById("doctorName").value = name;
+
+  alert("تمت إضافة الطبيب بنجاح");
+}
+loadDoctors();
 let appointmentsData=[];
 let currentPatient=null;
 let statusFilter="all";
@@ -1464,7 +1538,13 @@ document.getElementById("radiologyFile");
 
 const message =
 document.getElementById("uploadMessage");
+const doctorName =
+document.getElementById("doctorName").value;
 
+if (!doctorName) {
+  message.textContent = "⚠️ اختر الطبيب المُرسل أولاً";
+  return;
+}
 if(!currentPatient){
 
 message.textContent =
@@ -1531,12 +1611,15 @@ return;
 }
 
 
-const updateData =
-isPDF
-
-? {report_file_path:filePath}
-
-: {exam_file_path:filePath};
+const updateData = isPDF
+  ? {
+      report_file_path: filePath,
+      doctor_name: doctorName
+    }
+  : {
+      exam_file_path: filePath,
+      doctor_name: doctorName
+    };
 
 
 const {error:updateError} =
