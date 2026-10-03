@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>لوحة الطبيب - مستشفى المثنى الأهلي</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f8fa;
+      color: #222;
+    }
+
+    .header {
+      background: white;
+      padding: 18px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .header h2 {
+      margin: 5px;
+      color: #075b70;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 25px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .doctor-name {
+      font-size: 20px;
+      font-weight: bold;
+      color: #075b70;
+      margin-bottom: 15px;
+    }
+
+    .search-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .patient {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 12px;
+    }
+
+    .patient p {
+      margin: 7px 0;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .file-btn {
+      display: inline-block;
+      padding: 10px 14px;
+      background: #0787a3;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .logout {
+      border: none;
+      background: #b42318;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #message {
+      text-align: center;
+      padding: 15px;
+      color: #666;
+    }
+
+    @media (max-width: 650px) {
+      .search-box {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <h2>مستشفى المثنى الأهلي</h2>
+    <div>قسم الأشعة والمفراس</div>
+  </div>
+
+  <div class="container">
+
+    <div class="card">
+
+      <div class="doctor-name">
+        👨‍⚕️ الطبيب:
+        <span id="doctorDisplay"></span>
+      </div>
+
+      <div class="search-box">
+
+        <input
+          type="text"
+          id="patientSearch"
+          placeholder="🔎 ابحث باسم المريض"
+        >
+
+        <input
+          type="date"
+          id="dateSearch"
+        >
+
+      </div>
+
+      <button
+        class="logout"
+        type="button"
+        onclick="logoutDoctor()"
+      >
+        تسجيل الخروج
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>📋 فحوصات المرضى</h3>
+
+      <div id="message">
+        جاري تحميل الفحوصات...
+      </div>
+
+      <div id="results"></div>
+
+    </div>
+
+  </div>
+
+
+<script>
+
+const SUPABASE_URL =
+  "https://kpxonagjclpmwwoczwog.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Svs8n3EuWTtMngtjw6MEnA_QU-dd0z8";
+
+
+const doctorName =
+  sessionStorage.getItem("doctor_name");
+
+
+if (!doctorName) {
+  window.location.href = "doctor.html";
+}
+
+
+document.getElementById("doctorDisplay").textContent =
+  doctorName || "";
+
+
+let doctorExams = [];
+
+
+async function loadDoctorExams() {
+
+  const message =
+    document.getElementById("message");
+
+  try {
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/appointments" +
+      "?doctor_name=eq." +
+      encodeURIComponent(doctorName) +
+      "&select=id,patient_name,exam_type,appointment_date,exam_file_path,report_file_path" +
+      "&order=appointment_date.desc";
+
+
+    const response = await fetch(url, {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization":
+          "Bearer " + SUPABASE_KEY
+      }
+    });
+
+
+    const data = await response.json();
+
+
+    if (!response.ok) {
+      console.error(data);
+      message.textContent =
+        "تعذر تحميل الفحوصات";
+      return;
+    }
+
+
+    doctorExams = data;
+
+    renderExams();
+
+  } catch (error) {
+
+    console.error(error);
+
+    message.textContent =
+      "حدث خطأ أثناء تحميل الفحوصات";
+
+  }
+
+}
+
+
+function renderExams() {
+
+  const patientSearch =
+    document.getElementById("patientSearch")
+      .value.trim().toLowerCase();
+
+  const dateSearch =
+    document.getElementById("dateSearch").value;
+
+  const results =
+    document.getElementById("results");
+
+  const message =
+    document.getElementById("message");
+
+
+  const filtered = doctorExams.filter((exam) => {
+
+    const patientName =
+      (exam.patient_name || "").toLowerCase();
+
+    const matchesName =
+      !patientSearch ||
+      patientName.includes(patientSearch);
+
+    const matchesDate =
+      !dateSearch ||
+      exam.appointment_date === dateSearch;
+
+    return matchesName && matchesDate;
+
+  });
+
+
+  results.innerHTML = "";
+
+
+  if (filtered.length === 0) {
+
+    message.style.display = "block";
+    message.textContent =
+      "لا توجد فحوصات مطابقة";
+
+    return;
+  }
+
+
+  message.style.display = "none";
+
+
+  filtered.forEach((exam) => {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "patient";
+
+
+    let buttons = "";
+
+
+    if (exam.exam_file_path) {
+
+      buttons += `
+        <a
+          class="file-btn"
+          href="${exam.exam_file_path}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          🩻 مشاهدة الفحص
+        </a>
+      `;
+
+    }
+
+
+    if (exam.report_file_path) {
+
+      buttons += `
+        <a
+          class="file-btn"
+          href="${exam.report_file_path}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          📄 مشاهدة التقرير
+        </a>
+      `;
+
+    }
+
+
+    div.innerHTML = `
+      <p>
+        <strong>اسم المريض:</strong>
+        ${exam.patient_name || "-"}
+      </p>
+
+      <p>
+        <strong>نوع الفحص:</strong>
+        ${exam.exam_type || "-"}
+      </p>
+
+      <p>
+        <strong>تاريخ الفحص:</strong>
+        ${exam.appointment_date || "-"}
+      </p>
+
+      <div class="buttons">
+        ${buttons || "النتيجة لم تُرفع بعد"}
+      </div>
+    `;
+
+
+    results.appendChild(div);
+
+  });
+
+}
+
+
+document
+  .getElementById("patientSearch")
+  .addEventListener("input", renderExams);
+
+
+document
+  .getElementById("dateSearch")
+  .addEventListener("change", renderExams);
+
+
+function logoutDoctor() {
+
+  sessionStorage.removeItem("doctor_id");
+  sessionStorage.removeItem("doctor_name");
+
+  window.location.href = "doctor.html";
+
+}
+
+
+loadDoctorExams();
+
+</script>
+
+</body>
+</html>
