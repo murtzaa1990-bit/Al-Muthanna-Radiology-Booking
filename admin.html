@@ -541,6 +541,7 @@ onchange="applyFilters()">
 <th>التاريخ</th>
 <th>الوقت</th>
 <th>الحالة</th>
+<th>👁️ مشاهدة المريض</th>
 <th>الإجراءات</th>
 </tr>
 </thead>
@@ -995,7 +996,20 @@ row.innerHTML=`
 <td>${escapeHtml(time)}</td>
 
 <td>${statusBadge(status)}</td>
-
+<td>
+  ${
+    item.patient_viewed_at
+      ? `✅ تمت المشاهدة<br><small>${new Date(item.patient_viewed_at).toLocaleString("ar-IQ", {
+          timeZone: "Asia/Baghdad",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
+        })}</small>`
+      : `⏳ لم تتم المشاهدة`
+  }
+</td>
 <td class="actions"></td>
 
 `;
