@@ -1524,17 +1524,156 @@ function printResultQR() {
   const printWindow = window.open("", "_blank");
 
   printWindow.document.write(`
-    <html dir="rtl">
-      <head>
-        <title>QR نتيجة المريض</title>
-      </head>
-      <body style="text-align:center;font-family:Arial;padding:30px;">
-        <h2>مستشفى المثنى الأهلي</h2>
-        <h3>QR Code لنتيجة المريض</h3>
-        <img src="${qrUrl}" style="width:260px;height:260px;">
-        <p>امسح الرمز لعرض نتيجة الفحص</p>
-      </body>
-    </html>
+   <html dir="rtl">
+<head>
+  <title>بطاقة نتيجة الفحص - مستشفى المثنى الأهلي</title>
+  <meta charset="UTF-8">
+
+  <style>
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Tahoma, sans-serif;
+      direction: rtl;
+      background: #fff;
+      color: #111;
+    }
+
+    .page {
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      border: 2px solid #1d5f8a;
+      border-radius: 14px;
+      padding: 25px 35px;
+    }
+
+    .logo {
+      width: 105px;
+      height: 105px;
+      object-fit: contain;
+      margin-bottom: 5px;
+    }
+
+    .hospital {
+      font-size: 27px;
+      font-weight: bold;
+      margin: 4px 0;
+    }
+
+    .department {
+      font-size: 21px;
+      font-weight: bold;
+      color: #1d5f8a;
+      margin-bottom: 10px;
+    }
+
+    .line {
+      border-top: 2px solid #1d5f8a;
+      margin: 12px 0 18px;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .qr {
+      width: 260px;
+      height: 260px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 12px;
+    }
+
+    .scan {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .instructions {
+      text-align: right;
+      background: #f5f8fa;
+      border: 1px solid #d5e1e8;
+      border-radius: 10px;
+      padding: 15px 22px;
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .instructions h3 {
+      text-align: center;
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .warning {
+      margin-top: 12px;
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .footer {
+      border-top: 1px solid #aaa;
+      margin-top: 22px;
+      padding-top: 12px;
+      font-size: 16px;
+      line-height: 1.8;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <img class="logo" src="hospital-logo.jpg.jpg">
+
+    <div class="hospital">مستشفى المثنى الأهلي</div>
+    <div class="department">قسم الأشعة والمفراس</div>
+
+    <div class="line"></div>
+
+    <div class="title">رمز الوصول إلى نتيجة الفحص</div>
+
+    <img class="qr" src="${qrUrl}">
+
+    <div class="scan">
+      امسح رمز QR بواسطة كاميرا الهاتف لعرض نتيجة الفحص
+    </div>
+
+    <div class="instructions">
+      <h3>تعليمات مشاهدة النتيجة</h3>
+
+      1- افتح كاميرا الهاتف المحمول.<br>
+      2- وجّه الكاميرا نحو رمز QR الموجود أعلاه.<br>
+      3- اضغط على الرابط الذي يظهر على شاشة الهاتف.<br>
+      4- سيتم فتح منصة مستشفى المثنى الأهلي وعرض نتيجة الفحص.<br>
+      5- يمكنك مشاهدة النتيجة أو تنزيل الملفات المتاحة على جهازك.<br><br>
+
+      ويمكن أيضاً مشاهدة النتيجة عن طريق الدخول إلى المنصة وكتابة
+      <strong>رقم الموبايل الذي تم الحجز به</strong>.
+    </div>
+
+    <div class="warning">
+      تنبيه: لديك 5 محاولات لمشاهدة وتنزيل نتيجة الفحص.
+    </div>
+
+    <div class="footer">
+      مستشفى المثنى الأهلي<br>
+      النجف الأشرف - شارع المثنى<br>
+      للاتصال: 7174
+    </div>
+
+  </div>
+</body>
+</html>
   `);
 
   printWindow.document.close();
