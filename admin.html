@@ -1506,6 +1506,8 @@ function downloadResultQR() {
 }
 
 function printResultQR() {
+  const patientName =
+  currentPatient?.patient_name || currentPatient?.name || "غير معروف";
   const qrResult = document.getElementById("qrResult");
   const canvas = qrResult.querySelector("canvas");
   const img = qrResult.querySelector("img");
@@ -1639,7 +1641,7 @@ function printResultQR() {
     <div class="department">قسم الأشعة والمفراس</div>
 
     <div class="line"></div>
-
+<div style="font-size:24px;font-weight:bold;margin-bottom:14px;">اسم المريض: ${escapeHtml(patientName)}</div>
     <div class="title">رمز الوصول إلى نتيجة الفحص</div>
 
     <img class="qr" src="${qrUrl}">
